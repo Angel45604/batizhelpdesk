@@ -12,7 +12,7 @@ module.exports = function setupStatusModel (config) {
       primaryKey: true,
       autoIncrement: true
     },
-    satus: {
+    status: {
       type: Sequelize.STRING,
       allowNull: false
     }

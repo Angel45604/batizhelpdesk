@@ -1,0 +1,40 @@
+{
+  "name": "batizdeskhelp-api",
+  "version": "1.0.0",
+  "description": "A Simple Desk-Help Platform -Api Module",
+  "main": "server.js",
+  "scripts": {
+    "start": "set NODE_ENV=production & node server.js",
+    "start-dev": "set DEBUG=batizdeskhelp.* & nodemon server.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Angel45604/batizhelpdesk.git"
+  },
+  "author": "Angel Marcos <angel.marcos@live.com.mx>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Angel45604/batizhelpdesk/issues"
+  },
+  "homepage": "https://github.com/Angel45604/batizhelpdesk#readme",
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "nodemon": "^1.12.1",
+    "proxyquire": "^1.8.0",
+    "sinon": "^4.1.2",
+    "standard": "^10.0.3",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "express-asyncify": "^1.0.0",
+    "express-jwt": "^5.3.0",
+    "express-jwt-permissions": "^1.0.0",
+    "jsonwebtoken": "^8.1.0",
+    "mysql2": "^1.5.0",
+    "batizdeskhelp-db": "file:../batizdeskhelp-db"
+  }
+}

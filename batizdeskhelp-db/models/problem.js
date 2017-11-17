@@ -17,16 +17,16 @@ module.exports = function setupProblemModel (config) {
       allowNull: false
     },
     title: {
-        type: Sequelize.STRING,
-        allowNull: false
+      type: Sequelize.STRING,
+      allowNull: false
     },
     content: {
-        type: Sequelize.STRING,
-        allowNull: false
+      type: Sequelize.STRING,
+      allowNull: false
     },
     username: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
+      type: Sequelize.STRING,
+      allowNull: false
+    }
   })
 }

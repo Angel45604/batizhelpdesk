@@ -3,6 +3,7 @@
 const debug = require('debug')('batizhelpdesk:db:setup')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
+const minimist = require('minimist')
 const db = require('./')
 
 const prompt = inquirer.createPromptModule()
@@ -16,7 +17,7 @@ async function setup () {
     }
   ])
 
-  if(!answer.setup) {
+  if (!answer.setup) {
     return console.log('Nothing happened :)')
   }
 

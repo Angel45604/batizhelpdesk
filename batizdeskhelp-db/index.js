@@ -7,6 +7,9 @@ const setupRoleModel = require('./models/role')
 const setupStatusModel = require('./models/status')
 const setupUserModel = require('./models/user')
 
+const setupProblem = require('./lib/problem')
+const setupStatus = require('./lib/status')
+
 module.exports = async function (config) {
   const sequelize = setupDatabase(config)
   const AreaModel = setupAreaModel(config)
@@ -27,12 +30,22 @@ module.exports = async function (config) {
     await sequelize.sync({ force: true })
   }
 
+  await StatusModel.bulkCreate([
+    {status: 'red'},
+    {status: 'yellow'},
+    {status: 'green'},
+    {status: 'check'}
+  ], { fields: ['status'] }).then((statuses) => {
+    console.log(statuses)
+  })
+ 
+
   // sequelize.sync()
 
   const Area = {}
-  const Problem = {}
+  const Problem = setupProblem(ProblemModel)
   const Role = {}
-  const Status = {}
+  const Status = setupStatus(StatusModel)
   const User = {}
 
   return {
