@@ -26,6 +26,40 @@ api.use('*', async (req, res, next) => {
   next()
 })
 
+api.post('/problems', async (req, res, next) => {
+  const folio = req.body.folio
+  const title = req.body.title
+  const content = req.body.content
+  const username = req.body.username
+  let problem = {
+    folio,
+    title,
+    content,
+    username
+  }
+
+  try {
+    await Problem.createOrUpdate(problem)
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(problem)
+})
+
+api.get('/problems', async (req, res, next) => {
+  debug('A request has come to /problems')
+
+  let problems = []
+  try {
+    problems = await Problem.findAll()
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(problems)
+})
+
 api.get('/status', async (req, res, next) => {
   debug('A request has come to /status')
 

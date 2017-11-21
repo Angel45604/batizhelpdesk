@@ -1,0 +1,35 @@
+<menu-bar-component [header]="header"></menu-bar-component>
+<div class="content" fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-horizontal-stepper [linear]="isLinear">
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>General Settings</ng-template>
+        <mat-form-field>
+            <input matInput placeholder="Some stuff" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Almost There</ng-template>
+        <mat-form-field>
+            <input matInput placeholder="Some changes" formControlName="secondCtrl" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+        <button mat-button matStepperPrevious>Back</button>
+        </div>
+    </mat-step>
+    </mat-horizontal-stepper>
+</div>

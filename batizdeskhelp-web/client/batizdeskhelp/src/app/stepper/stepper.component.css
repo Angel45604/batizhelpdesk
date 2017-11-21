@@ -1,0 +1,11 @@
+menu-bar-component{
+    z-index:3;
+    position: fixed;
+}
+
+.content {
+    position:relative;
+    flex:1;
+    flex-direction: column;
+    top:75px;
+}

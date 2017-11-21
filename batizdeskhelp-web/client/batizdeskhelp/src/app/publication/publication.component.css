@@ -1,0 +1,12 @@
+.card-container {
+    max-width:60%;
+    padding-top:5rem;
+}
+
+.spacer {
+    width:2rem;
+}
+
+.date {
+    font-size: .75rem;
+}
