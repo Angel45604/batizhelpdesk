@@ -1,0 +1,18 @@
+<div class="publicator-container" fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20">
+    <mat-card>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Titulo">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-select placeholder="Area">
+                  <mat-option *ngFor="let area of areas" [value]="area.value">
+                    {{ area.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+                  <button mat-raised-button>Enviar</button>
+    </mat-card>    
+</div>

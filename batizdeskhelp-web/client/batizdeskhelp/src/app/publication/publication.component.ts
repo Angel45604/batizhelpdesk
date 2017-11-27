@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'publication-component',
@@ -9,4 +9,6 @@ import { Component} from '@angular/core';
 export class PublicationComponent{
     header="Publication";
     admin="false";
+
+    @Input('status')status:number;
 }
