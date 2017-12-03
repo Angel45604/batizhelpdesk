@@ -3,13 +3,19 @@
 const debug = require('debug')('batizdeskhelp:api:routes')
 const express = require('express')
 const asyncify = require('express-asyncify')
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
 const db = require('batizdeskhelp-db')
 
 const config = require('./config')
 
 const api = asyncify(express.Router())
 
-let services, Problem, Status
+api.use(morgan('dev'))
+
+api.use(bodyParser.urlencoded({extended: true}))
+
+let services, Problem, Status, User
 
 api.use('*', async (req, res, next) => {
   if (!services) {
@@ -22,6 +28,7 @@ api.use('*', async (req, res, next) => {
 
     Problem = services.Problem
     Status = services.Status
+    User = services.User
   }
   next()
 })
@@ -58,6 +65,28 @@ api.get('/problems', async (req, res, next) => {
   }
 
   res.send(problems)
+})
+
+api.post('/users', async(req, res, next) => {
+  debug('A request has come to /users')
+  const username = req.body.username
+  const password = req.body.password 
+  const email = req.body.email
+  const uuid = req.body.uuid
+  let user = {
+    username,
+    password,
+    email,
+    uuid
+  }
+  debug(`User: ${user}`)
+  try {
+    await User.createOrUpdate(user)
+  } catch(e) {
+    return next(e)
+  }
+
+  res.send(user)
 })
 
 api.get('/status', async (req, res, next) => {

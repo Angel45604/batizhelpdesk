@@ -21,6 +21,7 @@
     "standard": "^10.0.3"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "chalk": "^2.3.0",
     "debug": "^3.1.0",
     "inquirer": "^4.0.0",

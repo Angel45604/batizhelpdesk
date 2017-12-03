@@ -2,6 +2,9 @@
 
 const Sequelize = require('sequelize')
 const setupDatabase = require('../lib/db')
+const bcrypt = require('bcrypt')
+const debug = require('debug')('batizdeskhelp:api:storage')
+
 
 module.exports = function setupUserModel (config) {
   const sequelize = setupDatabase(config)
@@ -28,5 +31,17 @@ module.exports = function setupUserModel (config) {
       type: Sequelize.STRING,
       allowNull: false
     }
+  }, {
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+      }
+    },
+    instanceMethods: {
+      validPassword: function(password, hash) {
+        return bcrypt.compareSync(password, hash, console.log());
+      }
+    }  
   })
 }

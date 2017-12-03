@@ -9,6 +9,7 @@ const setupUserModel = require('./models/user')
 
 const setupProblem = require('./lib/problem')
 const setupStatus = require('./lib/status')
+const setupUser = require('./lib/user')
 
 module.exports = async function (config) {
   const sequelize = setupDatabase(config)
@@ -46,7 +47,7 @@ module.exports = async function (config) {
   const Problem = setupProblem(ProblemModel)
   const Role = {}
   const Status = setupStatus(StatusModel)
-  const User = {}
+  const User = setupUser(UserModel)
 
   return {
     Area,

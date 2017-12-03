@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 //material
 import { MatFormFieldModule } from '@angular/material';
@@ -28,8 +29,9 @@ import { PublicatorComponent } from './publicator/publicator.component';
 import { Page404Component } from './404/404.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
+import { AuthenticationService } from './services/authentication.service';
 const appRoutes: Routes = [
-  {path: '', component: AppComponent},
+  {path: '', component: AppComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
   {path: '**', component: Page404Component},
@@ -51,6 +53,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatStepperModule,
     ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -59,9 +62,10 @@ const appRoutes: Routes = [
     MatIconModule,
     MatCardModule,
     MatSelectModule,
+    HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, AuthenticationService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

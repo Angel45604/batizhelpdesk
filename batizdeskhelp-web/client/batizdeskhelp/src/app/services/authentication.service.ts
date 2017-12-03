@@ -10,12 +10,10 @@ export class AuthenticationService {
     login(username: string, password: string) {
         return this.http.post('http://localhost:3000/login', { username: username, password: password })
             .map((response: Response) => {
-                 
                 // login successful
                 let user = response.json();
                 console.log(user);
                 if (user) {
-                   
                     // store user
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
@@ -25,6 +23,6 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage
         localStorage.removeItem('currentUser');
-        return this.http.get('http://localhost:13441/logout');
+        return this.http.get('http://localhost:3000/logout');
     }
 }
