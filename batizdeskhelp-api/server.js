@@ -5,6 +5,7 @@ const http = require('http')
 const chalk = require('chalk')
 const express = require('express')
 const asyncify = require('express-asyncify')
+const cors = require('cors')
 
 const api = require('./api')
 const storage = require('./storage')
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3000
 const app = asyncify(express())
 const server = http.createServer(app)
 
+app.use(cors())
 app.use('/api', api)
 
 app.use('/storage', storage)

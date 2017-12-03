@@ -18,7 +18,6 @@ const storage = asyncify(express())
 let User, services
 
 storage.use(morgan('dev'))
-storage.use(cors())
 storage.use(bodyParser.json())
 storage.use(bodyParser.urlencoded({extended: true}))
 
@@ -50,7 +49,7 @@ storage.use('*', async (req, res, next) => {
 
 storage.use(async (req,res,next) => {
     if(req.cookies.user_sid && !req.session.user) {
-        res.clearCookie('user-sid')
+        res.clearCookie('user_sid')
     }
     next()
 })
@@ -104,7 +103,7 @@ storage.route('/login')
                 if(user._modelOptions.instanceMethods.validPassword(password, user.password)){
                     debug('LOGIN SUCCESSFULL')
                     req.session.user = user.dataValues;
-                    return res.send('USER SUCCESFULLY LOGIN')
+                    return res.send(user)
                 }else {
                     return res.send('CREDENTIALS INCORRECT')
                 }
@@ -129,9 +128,9 @@ storage.route('/login')
     storage.get('/logout', async(req, res, next) => {
         if(req.session.user && req.cookies.user_sid) {
             res.clearCookie('user_sid')
-            res.send('Logout successfull')
+            debug('Logout successfull')
         }else {
-            res.send('you are not logged')
+            debug('you are not logged')
         }
     })
 

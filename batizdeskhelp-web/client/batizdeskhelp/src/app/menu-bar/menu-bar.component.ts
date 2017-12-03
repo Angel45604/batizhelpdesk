@@ -1,4 +1,5 @@
 import { Component, Input} from '@angular/core';
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
     selector: 'menu-bar-component',
@@ -7,9 +8,11 @@ import { Component, Input} from '@angular/core';
 })
 
 export class MenubarComponent{
-    constructor(){}
+    constructor(private authenticationService:AuthenticationService){}
     @Input('header') header: string;
     logOut(){
+        this.authenticationService.logout();
         location.reload();
+        
     }
 }

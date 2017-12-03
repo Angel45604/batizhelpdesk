@@ -34,13 +34,13 @@ module.exports = function setupUserModel (config) {
   }, {
     hooks: {
       beforeCreate: (user) => {
-        const salt = bcrypt.genSaltSync();
-        user.password = bcrypt.hashSync(user.password, salt);
+        const salt = bcrypt.genSaltSync()
+        user.password = bcrypt.hashSync(user.password, salt)
       }
     },
     instanceMethods: {
       validPassword: function(password, hash) {
-        return bcrypt.compareSync(password, hash, console.log());
+        return bcrypt.compareSync(password, hash, console.log())
       }
     }  
   })
