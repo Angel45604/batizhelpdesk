@@ -4,6 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {MenubarComponent} from '../menu-bar/menu-bar.component';
 
 import { AuthenticationService } from '../services/authentication.service';
+
+interface Credentials {
+    username: string,
+    password: string
+}
+
 @Component({
     moduleId: module.id,
     templateUrl: 'login.component.html',
@@ -11,8 +17,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 
 export class LoginComponent implements OnInit {
-    username:string;
-    password:string;
+    credentials: Credentials
     model: any = {};
     loading = false;
     returnUrl: string;
@@ -31,9 +36,9 @@ export class LoginComponent implements OnInit {
     }
 
     logino() {
-        console.log(this.username +" "+ this.password);
+        console.log(this.credentials);
         this.loading = true;
-        this.authenticationService.login(this.username, this.password)
+        this.authenticationService.login(this.credentials)
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);
