@@ -8,6 +8,7 @@ const morgan = require('morgan')
 const asyncify = require('express-asyncify')
 const debug = require('debug')('batizdeskhelp:api:routes')
 const cors = require('cors')
+const auth = require('./auth')
 
 const db = require('batizdeskhelp-db')
 
@@ -103,12 +104,20 @@ storage.route('/login')
                 if(user._modelOptions.instanceMethods.validPassword(password, user.password)){
                     debug('LOGIN SUCCESSFULL')
                     req.session.user = user.dataValues;
-                    return res.send(user)
+                    debug(user.toJSON())
+                    let token
+                    auth.sign(user.toJSON(), config.auth.secret, (err, token) => {
+                        if(!err) {
+                            debug(`token: ${token}`)
+                            return res.send(user)
+                        }
+                        return err
+                    })
                 }else {
                     return res.send('CREDENTIALS INCORRECT')
                 }
             }).catch(e => {
-                debug('Username unknown')
+                debug(e)
                 return res.send('Username Unknown')
             })
         }catch (e) {
@@ -139,3 +148,5 @@ storage.route('/login')
     })
 
 module.exports = storage
+
+//subacademica-jdb@ipn.mx

@@ -18,6 +18,8 @@ interface Credentials {
 
 export class LoginComponent implements OnInit {
     credentials: Credentials
+    username: string;
+    password: string;
     model: any = {};
     loading = false;
     returnUrl: string;
@@ -36,9 +38,9 @@ export class LoginComponent implements OnInit {
     }
 
     logino() {
-        console.log(this.credentials);
+        console.log(this.username +" " + this.password);
         this.loading = true;
-        this.authenticationService.login(this.credentials)
+        this.authenticationService.login(this.username, this.password)
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);

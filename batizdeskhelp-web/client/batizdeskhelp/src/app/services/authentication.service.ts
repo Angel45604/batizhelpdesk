@@ -8,23 +8,21 @@ export class AuthenticationService {
     constructor(private http: Http) {}
 
 
-    login(credentials) {      
-        return this.http.post('http://localhost:3000/storage/login', { credentials })
+    login(username: string, password: string) {      
+        return this.http.post('http://localhost:3000/storage/login', { username, password })
             .map((response: Response) => {
                 // login successful
+                console.log(`response ${response.toString()}`)
                 let user = response.json();
                 console.log(user);
                 if (user) {
                     // store user
                     localStorage.setItem('currentUser', JSON.stringify(user));
+                    console.log(`localstorage: ${localStorage.getItem('currentUser')}`)
+                }else {
+                    console.log('Hubo un error')
                 }
             })
-            .subscribe(
-                // We're assuming the response will be an object
-                // with the JWT on an id_token key
-                data => localStorage.setItem('id_token', data.id_token),
-                error => console.log(error)
-            );
     }
 
     logout() {
