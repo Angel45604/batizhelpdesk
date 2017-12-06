@@ -36,6 +36,7 @@ api.use('*', async (req, res, next) => {
 
 api.post('/problems', async (req, res, next) => {
   const folio = req.body.folio
+  debug(`BODY: ${JSON.stringify(req.body)} FOLIO: ${req.body.folio}`)
   const title = req.body.title
   const content = req.body.content
   const username = req.body.username
@@ -45,6 +46,7 @@ api.post('/problems', async (req, res, next) => {
     content,
     username
   }
+  debug(`PROBLEM: ${JSON.stringify(req.body)} ${title}`)
 
   try {
     await Problem.createOrUpdate(problem)

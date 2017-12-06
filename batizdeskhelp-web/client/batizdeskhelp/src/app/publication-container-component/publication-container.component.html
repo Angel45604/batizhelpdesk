@@ -1,0 +1,3 @@
+<div *ngFor="let comment of comments.slice().reverse()">
+    <publication-component [username]="comment.username" [title]="comment.title" [content]="comment.content" [area]="comment.area"></publication-component>
+  </div>

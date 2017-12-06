@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable} from 'rxjs/Rx';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Problem } from '../models/problem';
 import { PublishProblemService } from '../services/publishProblem.service';
@@ -37,14 +37,10 @@ export class PublicatorComponent{
     constructor(
         private publishProblemService: PublishProblemService,
         private areaService: AreaService,
-        private http: Http
+        private http: HttpClient
     ){
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.loadAreas()
-    }
-
-    ngOnInit() {
-        //this.loadAreas()
     }
 
     loadAreas() {
@@ -61,25 +57,29 @@ export class PublicatorComponent{
         );
     }
 
-    submitProblem() {
-        console.log(this.area)
-        this.folio = this.uuid;
-        this.status = '3';
-        console.log(this.folio)
-        let problemOperation: Observable<Area[]>;
-        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username);
-        problemOperation = this.publishProblemService.addProblem(this.problem);
+    submitProblem(){
+        console.log(this.title,this.content, this.area);
+        
+        let commentOperation: Observable<Comment[]>;
+        const formData: any = new FormData();
+        
+          if(!this.editing){
+              this.problem = new Problem(this.folio,this.title, this.content, this.currentUser.username, 'Area');
+              console.log(JSON.stringify(this.problem))
+              commentOperation = this.publishProblemService.addProblem2(this.problem);
+            }
 
-        problemOperation.subscribe(
-            comments => {
-              EmitterService.get(this.listId).emit(comments);
-              this.problem = new Problem('','','','');
-              if(this.editing)this.editing = !this.editing;
-            },
-            err =>{
-              console.log(err);
-            });
-    }
+    
+        commentOperation.subscribe(
+          comments => {
+            EmitterService.get(this.listId).emit(comments);
+            this.problem = new Problem('','','','','');
+            if(this.editing)this.editing = !this.editing;
+          },
+          err =>{
+            console.log(err);
+          });
+      }
 
 
 }
