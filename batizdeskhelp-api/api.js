@@ -15,7 +15,7 @@ api.use(morgan('dev'))
 
 api.use(bodyParser.urlencoded({extended: true}))
 
-let services, Problem, Status, User
+let services, Problem, Status, User, Area
 
 api.use('*', async (req, res, next) => {
   if (!services) {
@@ -29,6 +29,7 @@ api.use('*', async (req, res, next) => {
     Problem = services.Problem
     Status = services.Status
     User = services.User
+    Area = services.Area
   }
   next()
 })
@@ -100,6 +101,54 @@ api.get('/status', async (req, res, next) => {
   }
 
   res.send(status)
+})
+
+api.post('/status', async(req, res, next) => {
+  debug('A request has come to /status')
+
+  const day = req.body.day
+  let status = req.body.status
+
+  let newstatus = {
+    day,
+    status
+  }
+  debug(`Status: ${newstatus}`)
+  try {
+    await Status.createOrUpdate(newstatus)
+  } catch(e) {
+    return next(e)
+  }
+  res.send(newstatus)
+})
+
+api.get('/area', async(req, res, next) => {
+  debug('A request has come to /area')
+
+  let areas = []
+  try {
+    areas = await Area.findAll()
+  } catch(e) {
+    return next(e)
+  }
+  res.send(areas)
+})
+
+api.post('/area', async(req, res, next) => {
+  debug('A request has come to /area')
+
+  const area = req.body.area
+  
+  let newarea = {
+    area
+  }
+  debug(`Area: ${newarea}`)
+  try {
+    await Area.createOrUpdate(newarea)
+  } catch(e) {
+    return next(e)
+  }
+  res.send(newarea)
 })
 
 module.exports = api

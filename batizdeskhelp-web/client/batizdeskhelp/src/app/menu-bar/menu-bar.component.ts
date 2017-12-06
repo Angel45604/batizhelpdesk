@@ -10,6 +10,7 @@ import {AuthenticationService} from '../services/authentication.service';
 export class MenubarComponent{
     constructor(private authenticationService:AuthenticationService){}
     @Input('header') header: string;
+    @Input('username') username: string;
     logOut(){
         this.authenticationService.logout();
         location.reload();

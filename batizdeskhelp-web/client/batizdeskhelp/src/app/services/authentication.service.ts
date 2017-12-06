@@ -13,14 +13,17 @@ export class AuthenticationService {
             .map((response: Response) => {
                 // login successful
                 console.log(`response ${response.toString()}`)
-                let user = response.json();
-                console.log(user);
+                let res = response.json();
+                let user = res.user;
+                let token = res.token
+                console.log(`user: ${JSON.stringify(user)} token: ${JSON.stringify(token)}`);
                 if (user) {
                     // store user
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    console.log(`localstorage: ${localStorage.getItem('currentUser')}`)
+                    localStorage.setItem('currentUser_token', JSON.stringify(token));
+                    console.log(`localstorage: ${localStorage.getItem('currentUser')}`);
                 }else {
-                    console.log('Hubo un error')
+                    console.log('Hubo un error');
                 }
             })
     }

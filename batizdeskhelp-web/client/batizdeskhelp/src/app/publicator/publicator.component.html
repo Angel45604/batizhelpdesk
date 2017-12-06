@@ -1,18 +1,20 @@
 <div class="publicator-container" fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20">
     <mat-card>
+        <form (ngSubmit)="submitProblem()">
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Titulo">
+                <input class="form-control" matInput placeholder="Titulo" [(ngModel)]="title" name="title">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <textarea matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+                <textarea class="form-control" matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="content" name="content"></textarea>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <mat-select placeholder="Area">
+                <mat-select placeholder="Area" [(ngModel)]="area" name="area">
                   <mat-option *ngFor="let area of areas" [value]="area.value">
                     {{ area.viewValue }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-                  <button mat-raised-button>Enviar</button>
+                  <button type="submit" mat-raised-button>Enviar</button>
+        </form>
     </mat-card>    
 </div>

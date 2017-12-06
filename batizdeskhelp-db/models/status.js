@@ -15,6 +15,10 @@ module.exports = function setupStatusModel (config) {
     status: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    days: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   })
 }

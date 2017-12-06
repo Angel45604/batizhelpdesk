@@ -28,8 +28,14 @@ import { PublicationComponent } from './publication/publication.component';
 import { PublicatorComponent } from './publicator/publicator.component';
 import { Page404Component } from './404/404.component';
 import { LoginComponent } from './login/login.component';
+import { InitComponent } from './init.component';
+
 import { AuthGuard } from './guard/auth.guard';
 import { AuthenticationService } from './services/authentication.service';
+import { AreaService } from './services/area.service';
+import { EmitterService } from './services/emmiter.service';
+import { PublishProblemService } from './services/publishProblem.service';
+
 const appRoutes: Routes = [
   {path: '', component: AppComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
@@ -45,7 +51,8 @@ const appRoutes: Routes = [
     PublicationComponent,
     PublicatorComponent,
     Page404Component,
-    LoginComponent
+    LoginComponent,
+    InitComponent
   ],
   imports: [
     FlexLayoutModule,
@@ -65,7 +72,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthGuard, AuthenticationService],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard, AuthenticationService, AreaService, EmitterService, PublishProblemService],
+  bootstrap: [InitComponent]
 })
 export class AppModule { }

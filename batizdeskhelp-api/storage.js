@@ -109,7 +109,7 @@ storage.route('/login')
                     auth.sign(user.toJSON(), config.auth.secret, (err, token) => {
                         if(!err) {
                             debug(`token: ${token}`)
-                            return res.send(user)
+                            return res.send({user, token})
                         }
                         return err
                     })
