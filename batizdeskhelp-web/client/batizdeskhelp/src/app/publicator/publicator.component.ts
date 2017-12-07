@@ -67,13 +67,14 @@ export class PublicatorComponent{
         this.status = '3';
         console.log(this.folio)
         let problemOperation: Observable<Area[]>;
-        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username);
+        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, 'PROGRA');
         problemOperation = this.publishProblemService.addProblem(this.problem);
 
         problemOperation.subscribe(
             comments => {
+                console.log(`PROBLEMS: ${comments}`)
               EmitterService.get(this.listId).emit(comments);
-              this.problem = new Problem('','','','');
+              this.problem = new Problem('','','','', '');
               if(this.editing)this.editing = !this.editing;
             },
             err =>{

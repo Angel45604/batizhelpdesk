@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule, RequestOptions, Headers } from '@angular/http';
-
 //material
 import { MatFormFieldModule } from '@angular/material';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -29,6 +28,7 @@ import { PublicatorComponent } from './publicator/publicator.component';
 import { Page404Component } from './404/404.component';
 import { LoginComponent } from './login/login.component';
 import { InitComponent } from './init.component';
+import { PublicationContainerComponent } from './publicaton-container/publication-container.component';
 
 import { AuthGuard } from './guard/auth.guard';
 import { AuthenticationService } from './services/authentication.service';
@@ -52,7 +52,8 @@ const appRoutes: Routes = [
     PublicatorComponent,
     Page404Component,
     LoginComponent,
-    InitComponent
+    InitComponent,
+    PublicationContainerComponent
   ],
   imports: [
     FlexLayoutModule,
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthGuard, AuthenticationService, AreaService, EmitterService, PublishProblemService],
+  providers: [AuthGuard, AuthenticationService, AreaService, EmitterService, PublishProblemService, HttpModule],
   bootstrap: [InitComponent]
 })
 export class AppModule { }

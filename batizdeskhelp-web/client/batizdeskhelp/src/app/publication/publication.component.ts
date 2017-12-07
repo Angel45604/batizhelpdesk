@@ -11,4 +11,8 @@ export class PublicationComponent{
     admin="false";
 
     @Input('status')status:number;
+    @Input('username')username:string;
+    @Input('title')title:string;
+    @Input('content')content:string;
+    @Input('area')area:string;
 }

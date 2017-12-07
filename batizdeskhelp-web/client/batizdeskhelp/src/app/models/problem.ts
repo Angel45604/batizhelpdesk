@@ -4,6 +4,6 @@ export class Problem {
         public title: string,
         public content: string,
         public username: string,
-
+        public status: string
     ){}
 }
