@@ -40,13 +40,22 @@ api.post('/problems', async (req, res, next) => {
   const title = req.body.title
   const content = req.body.content
   const username = req.body.username
+  const area = req.body.area
+  const status = req.body.status
+
   let problem = {
     folio,
     title,
     content,
-    username
+    username,
+    area,
+    status
   }
+<<<<<<< HEAD
   debug(`PROBLEM: ${JSON.stringify(req.body)} ${title}`)
+=======
+  debug(JSON.stringify(problem))
+>>>>>>> hotfix
 
   try {
     await Problem.createOrUpdate(problem)

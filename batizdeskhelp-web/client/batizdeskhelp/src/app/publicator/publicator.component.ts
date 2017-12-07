@@ -57,6 +57,7 @@ export class PublicatorComponent{
         );
     }
 
+<<<<<<< HEAD
     submitProblem(){
         console.log(this.title,this.content, this.area);
         
@@ -80,6 +81,28 @@ export class PublicatorComponent{
             console.log(err);
           });
       }
+=======
+    submitProblem() {
+        console.log(this.area)
+        this.folio = this.uuid;
+        this.status = '3';
+        console.log(this.folio)
+        let problemOperation: Observable<Area[]>;
+        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, 'PROGRA');
+        problemOperation = this.publishProblemService.addProblem(this.problem);
+
+        problemOperation.subscribe(
+            comments => {
+                console.log(`PROBLEMS: ${comments}`)
+              EmitterService.get(this.listId).emit(comments);
+              this.problem = new Problem('','','','', '');
+              if(this.editing)this.editing = !this.editing;
+            },
+            err =>{
+              console.log(err);
+            });
+    }
+>>>>>>> hotfix
 
 
 }

@@ -25,8 +25,17 @@ module.exports = function setupStatus (StatusModel) {
     return StatusModel.findAll()
   }
 
+  function findOne(status) {
+    return StatusModel.findOne({
+      where: {
+        status
+      }
+    })
+  }
+
   return {
     createOrUpdate,
-    findAll
+    findAll,
+    findOne
   }
 }

@@ -9,6 +9,9 @@ import { User } from './models/user';
 export class AppComponent {
   currentUser: User;
   username: string;
+  area='PROGRAMACION';
+  title='TITULAZO';
+  content='CONTENIDAZO';
   
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));

@@ -4,6 +4,10 @@ export class Problem {
         public title: string,
         public content: string,
         public username: string,
+<<<<<<< HEAD
         public area: string
+=======
+        public status: string
+>>>>>>> hotfix
     ){}
 }

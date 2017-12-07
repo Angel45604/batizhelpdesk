@@ -27,6 +27,14 @@ module.exports = function setupProblemModel (config) {
     username: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    area: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    status: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
   })
 }
