@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule, RequestOptions, Headers } from '@angular/http';
+import { HttpClientModule} from '@angular/common/http';
 //material
 import { MatFormFieldModule } from '@angular/material';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatSelectModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [AuthGuard, AuthenticationService, AreaService, EmitterService, PublishProblemService, HttpModule],

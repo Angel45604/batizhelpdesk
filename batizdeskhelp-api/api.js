@@ -14,6 +14,7 @@ const api = asyncify(express.Router())
 api.use(morgan('dev'))
 
 api.use(bodyParser.urlencoded({extended: true}))
+api.use(bodyParser.json())
 
 let services, Problem, Status, User, Area
 
@@ -130,8 +131,6 @@ api.post('/status', async(req, res, next) => {
 })
 
 api.get('/area', async(req, res, next) => {
-  debug('A request has come to /area')
-
   let areas = []
   try {
     areas = await Area.findAll()
@@ -145,7 +144,9 @@ api.post('/area', async(req, res, next) => {
   debug('A request has come to /area')
 
   const area = req.body.area
-  
+  console.log(req.params)
+  console.log(req.body)
+  console.log(req.body.area)
   let newarea = {
     area
   }

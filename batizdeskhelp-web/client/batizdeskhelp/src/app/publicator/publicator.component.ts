@@ -1,7 +1,8 @@
 import { Component, Input} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable} from 'rxjs/Rx';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Problem } from '../models/problem';
 import { PublishProblemService } from '../services/publishProblem.service';
@@ -9,6 +10,7 @@ import { AreaService } from '../services/area.service';
 import { EmitterService } from '../services/emmiter.service';
 import { Area } from '../models/area';
 import { UUID } from 'angular2-uuid';
+import { ResponseContentType } from '@angular/http/';
 
 
 @Component({
@@ -37,7 +39,8 @@ export class PublicatorComponent{
     constructor(
         private publishProblemService: PublishProblemService,
         private areaService: AreaService,
-        private http: Http
+        private http: Http,
+        private htppC: HttpClient
     ){
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.loadAreas()
@@ -77,6 +80,7 @@ export class PublicatorComponent{
               console.log(err);
             });
     }
+
 
 
 }
