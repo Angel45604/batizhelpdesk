@@ -51,11 +51,7 @@ api.post('/problems', async (req, res, next) => {
     area,
     status
   }
-<<<<<<< HEAD
-  debug(`PROBLEM: ${JSON.stringify(req.body)} ${title}`)
-=======
   debug(JSON.stringify(problem))
->>>>>>> hotfix
 
   try {
     await Problem.createOrUpdate(problem)

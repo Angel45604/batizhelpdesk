@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable} from 'rxjs/Rx';
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { User } from '../models/user';
 import { Problem } from '../models/problem';
 import { PublishProblemService } from '../services/publishProblem.service';
@@ -37,7 +37,7 @@ export class PublicatorComponent{
     constructor(
         private publishProblemService: PublishProblemService,
         private areaService: AreaService,
-        private http: HttpClient
+        private http: Http
     ){
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.loadAreas()
@@ -57,52 +57,26 @@ export class PublicatorComponent{
         );
     }
 
-<<<<<<< HEAD
-    submitProblem(){
-        console.log(this.title,this.content, this.area);
-        
-        let commentOperation: Observable<Comment[]>;
-        const formData: any = new FormData();
-        
-          if(!this.editing){
-              this.problem = new Problem(this.folio,this.title, this.content, this.currentUser.username, 'Area');
-              console.log(JSON.stringify(this.problem))
-              commentOperation = this.publishProblemService.addProblem2(this.problem);
-            }
-
-    
-        commentOperation.subscribe(
-          comments => {
-            EmitterService.get(this.listId).emit(comments);
-            this.problem = new Problem('','','','','');
-            if(this.editing)this.editing = !this.editing;
-          },
-          err =>{
-            console.log(err);
-          });
-      }
-=======
     submitProblem() {
         console.log(this.area)
         this.folio = this.uuid;
         this.status = '3';
         console.log(this.folio)
-        let problemOperation: Observable<Area[]>;
-        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, 'PROGRA');
+        let problemOperation: Observable<Problem[]>;
+        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, '1', 'PROGRA');
         problemOperation = this.publishProblemService.addProblem(this.problem);
 
         problemOperation.subscribe(
             comments => {
                 console.log(`PROBLEMS: ${comments}`)
               EmitterService.get(this.listId).emit(comments);
-              this.problem = new Problem('','','','', '');
+              this.problem = new Problem('','','','', '','');
               if(this.editing)this.editing = !this.editing;
             },
             err =>{
               console.log(err);
             });
     }
->>>>>>> hotfix
 
 
 }
