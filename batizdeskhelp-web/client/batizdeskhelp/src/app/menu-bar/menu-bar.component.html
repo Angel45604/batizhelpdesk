@@ -1,10 +1,21 @@
-<mat-toolbar color="primary" class="content">
-    <span class="logo"><img src="../../assets/batizhelpdes"></span>
+<mat-toolbar color="primary" class="content" fxLayout="row">
+    <span class="logo"><img src="../../assets/batizhelpdesk.png"></span>
     <span class="spacer"></span>
     <span>{{username}}</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isLogged()">
         <mat-icon>more_vert</mat-icon>
     </button>
+    <div *ngIf="!isLogged()">
+        <form class="example-form" fxFlex="50" (ngSumbit)="login()">
+        <mat-form-field class="user">
+        <input class="user" matInput placeholder="User" required name="user" [(ngModel)]="usrname" class="form-control">
+        </mat-form-field>
+        <mat-form-field class="user">
+            <input class="user" matInput placeholder="Password" type="password" name="password" required [(ngModel)]="password" class="form-control">
+        </mat-form-field>
+        <button type="submit" (click)="login()" mat-raised-button color="primary">Enviar</button>
+        </form>
+    </div>
 </mat-toolbar>
     <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logOut()">

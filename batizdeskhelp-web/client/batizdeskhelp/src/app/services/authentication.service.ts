@@ -6,7 +6,13 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class AuthenticationService {
     constructor(private http: Http) {}
-
+    
+    isLogged() {
+        if(!sessionStorage.getItem('currentUser')) {
+            return false;
+        }
+        return true;
+    }
 
     login(username: string, password: string) {      
         return this.http.post('http://localhost:3000/storage/login', { username, password })
@@ -19,9 +25,9 @@ export class AuthenticationService {
                 console.log(`user: ${JSON.stringify(user)} token: ${JSON.stringify(token)}`);
                 if (user) {
                     // store user
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    localStorage.setItem('currentUser_token', JSON.stringify(token));
-                    console.log(`localstorage: ${localStorage.getItem('currentUser')}`);
+                    sessionStorage.setItem('currentUser', JSON.stringify(user));
+                    sessionStorage.setItem('currentUser_token', JSON.stringify(token));
+                    console.log(`sessionStorage: ${sessionStorage.getItem('currentUser')}`);
                 }else {
                     console.log('Hubo un error');
                 }
@@ -31,6 +37,7 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage
         localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
         return this.http.get('http://localhost:3000/storage/logout');
     }
 }

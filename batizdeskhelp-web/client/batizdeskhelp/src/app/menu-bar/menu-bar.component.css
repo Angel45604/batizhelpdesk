@@ -19,3 +19,12 @@ img{
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
+
+
+  .user {
+      height: 10%;
+  }
+
+  input {
+      font-size: 17px;
+  }

@@ -11,7 +11,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpModule, RequestOptions, Headers } from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
 //material
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
@@ -38,9 +38,9 @@ import { EmitterService } from './services/emmiter.service';
 import { PublishProblemService } from './services/publishProblem.service';
 
 const appRoutes: Routes = [
-  {path: '', component: AppComponent, canActivate:[AuthGuard]},
+  {path: '', component: AppComponent,},
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
+  {path: 'home', component: HomeComponent, },
   {path: '**', component: Page404Component},
 ];
 @NgModule({
