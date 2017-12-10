@@ -2,10 +2,11 @@
     <mat-card>
         <form (ngSubmit)="submitProblem()">
             <mat-form-field class="example-full-width">
-                <input class="form-control" matInput placeholder="Titulo" [(ngModel)]="title" name="title">
+                <input maxlength="255" class="form-control" matInput placeholder="Titulo" [(ngModel)]="title" name="title">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <textarea class="form-control" matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="content" name="content"></textarea>
+                <textarea  maxlength="255" class="form-control" matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="content" name="content"></textarea>
+                <mat-hint align="end">{{contentValue}} / 256</mat-hint>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-select placeholder="Area" [(ngModel)]="area" name="area">

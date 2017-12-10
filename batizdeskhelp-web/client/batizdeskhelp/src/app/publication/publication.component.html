@@ -1,12 +1,12 @@
-<div class="card-container" fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20">
-    <mat-card class="example-card" [ngClass]="{disabled:(status==3)}">
-        <mat-card-header [ngClass]="{green:(status==0), yellow:(status==1), red:(status==2)}">
+<div class="card-container" fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20" *ngIf="isVisible">
+    <mat-card class="example-card" [ngClass]="{disabled:(status==1)}">
+        <mat-card-header [ngClass]="{green:(status=='Green'), yellow:(status=='Orange'), red:(status=='Red')}">
             <div class="header-container">
                 <mat-card-title>{{username}}</mat-card-title>
                 <mat-card-subtitle>
                     <div fxLayout="row" fxLayoutAlgin="space-around center">
                         <span>{{area}}</span>
-                        <span class="spacer"></span><span class="date">10/10/2017</span>
+                        <span class="spacer"></span><span class="date">{{date | date:'MM/dd/yyyy'}}</span>
                     </div>
                 </mat-card-subtitle>
             </div>

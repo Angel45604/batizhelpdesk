@@ -1,3 +1,3 @@
-<div *ngFor="let problem of problems">
-<publication-component [status]="problem.status" [username]="problem.username" [title]="problem.title" [content]="problem.content" [area]="problem.area"></publication-component>
+<div *ngFor="let problem of problems.reverse()">
+<publication-component [date]='problem.createdAt' [isVisible]="isVisible" [status]="checkStatus(problem.status)" [username]="problem.username" [title]="problem.title" [content]="problem.content" [area]="problem.area"></publication-component>
 </div>

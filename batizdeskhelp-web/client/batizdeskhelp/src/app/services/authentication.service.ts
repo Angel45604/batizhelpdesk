@@ -9,8 +9,10 @@ export class AuthenticationService {
     
     isLogged() {
         if(!sessionStorage.getItem('currentUser')) {
+            console.log(`NO`)
             return false;
         }
+        console.log(`YES`)
         return true;
     }
 

@@ -42,7 +42,6 @@ api.post('/problems', async (req, res, next) => {
   const content = req.body.content
   const username = req.body.username
   const area = req.body.area
-  const status = req.body.status
 
   let problem = {
     folio,
@@ -50,7 +49,6 @@ api.post('/problems', async (req, res, next) => {
     content,
     username,
     area,
-    status
   }
   debug(JSON.stringify(problem))
 
@@ -75,6 +73,47 @@ api.get('/problems', async (req, res, next) => {
 
   res.send(problems)
 })
+api.get('/problems/:folio', async (req, res, next) => {
+  debug(`A request has come to /problems/${req.params.folio}`)
+
+  let folio = req.params.folio
+  let problem
+  try {
+    problem = await Problem.findByFolio(folio)
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(problem)
+})
+
+api.delete('/problems/:folio', async (req, res, next) => {
+  debug(`A request has come to /problems/${req.params.folio}`)
+
+  let folio = req.params.folio
+  let problem
+  try {
+    problem = await Problem.deleteProblem(folio)
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(`Problem with folio: ${folio} deleted successfully`)
+})
+
+api.patch('/problems/:folio', async (req, res, next) => {
+  debug(`A request has come to /problems/${req.params.folio}`)
+
+  let folio = req.params.folio
+  let problem
+  try {
+    problem = await Problem.checkProblem(folio)
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(`Problem with folio: ${folio} successfully checked`)
+})
 
 api.post('/users', async(req, res, next) => {
   debug('A request has come to /users')
@@ -97,6 +136,7 @@ api.post('/users', async(req, res, next) => {
 
   res.send(user)
 })
+
 
 api.get('/status', async (req, res, next) => {
   debug('A request has come to /status')

@@ -33,8 +33,9 @@ module.exports = function setupProblemModel (config) {
       allowNull: false
     },
     status: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   })
 }

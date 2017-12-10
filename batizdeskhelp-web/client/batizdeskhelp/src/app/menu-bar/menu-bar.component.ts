@@ -12,6 +12,8 @@ export class MenubarComponent{
     constructor(private authenticationService:AuthenticationService){}
     @Input('header') header: string;
     @Input('username') username: string;
+    @Input('color') color: string = 'accent';
+    @Input('error') error: boolean = false;
      
     usrname: string;
     password: string;
@@ -34,6 +36,8 @@ export class MenubarComponent{
                 location.reload();
             },
             error => {
+                this.color = 'warn';
+                this.error = true;
                 console.error(error);
             });
     }

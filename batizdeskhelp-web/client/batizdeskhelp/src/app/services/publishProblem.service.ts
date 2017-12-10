@@ -19,6 +19,12 @@ export class PublishProblemService {
         
      }
 
+     getProblemByFolio(folio: string) {
+        return this.http.get(this.statusurl+'/'+folio)
+                        .map((res:Response) => res.json())
+                        .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+     }
+
      addProblem (body: Object) {
         let bodyString = JSON.stringify(body); // Stringify payload
         console.log(bodyString)

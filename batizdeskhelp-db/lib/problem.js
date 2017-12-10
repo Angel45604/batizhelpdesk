@@ -37,7 +37,7 @@ module.exports = function setupProblem (ProblemModel) {
   function findAllCurrentActive () {
     return ProblemModel.findAll({
       where: {
-        [Op.or]: [{statusId: 0}, {statusId: 1}, {statusId: 2}]
+        status: true
       }
     })
   }
@@ -45,31 +45,7 @@ module.exports = function setupProblem (ProblemModel) {
   function findAllUncurrentActive () {
     return ProblemModel.findAll({
       where: {
-        statusId: 3
-      }
-    })
-  }
-
-  function findAllGreen () {
-    return ProblemModel.findAll({
-      where: {
-        statusId: 0
-      }
-    })
-  }
-
-  function findAllYellow () {
-    return ProblemModel.findAll({
-      where: {
-        statusId: 1
-      }
-    })
-  }
-
-  function findAllRed () {
-    return ProblemModel.findAll({
-      where: {
-        statusId: 2
+        status: false
       }
     })
   }
@@ -90,16 +66,34 @@ module.exports = function setupProblem (ProblemModel) {
     })
   }
 
+  function checkProblem (folio) {
+
+    return ProblemModel.update({
+      status: true,
+    }, {
+      where: {
+        folio
+      }
+    })
+  }
+
+  function deleteProblem (folio) {
+    return ProblemModel.destroy({
+      where: {
+        folio
+      }
+    })  
+  }
+
   return {
     createOrUpdate,
     findByFolio,
     findAll,
     findAllCurrentActive,
     findAllUncurrentActive,
-    findAllGreen,
-    findAllYellow,
-    findAllRed,
     findByUsername,
-    findByArea
+    findByArea,
+    checkProblem,
+    deleteProblem
   }
 }

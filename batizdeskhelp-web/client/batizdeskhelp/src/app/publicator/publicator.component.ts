@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnChanges} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable} from 'rxjs/Rx';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -12,7 +12,6 @@ import { Area } from '../models/area';
 import { UUID } from 'angular2-uuid';
 import { ResponseContentType } from '@angular/http/';
 
-
 @Component({
     selector: 'publicator-component',
     templateUrl: 'publicator.component.html',
@@ -20,17 +19,19 @@ import { ResponseContentType } from '@angular/http/';
     providers: [PublishProblemService]
 })
 
-export class PublicatorComponent{
+export class PublicatorComponent implements OnChanges{
     uuid = UUID.UUID()
     currentUser: User;
     folio: string;
     title: string;
-    content: string;
+    content: string = '';
+    contentValue = this.content.length || 0;
     username: string;
     area: string;
     status: string;
     
     problem: Problem;
+    problems: Problem[];
     areas= [];
     editing = false;
 
@@ -42,7 +43,7 @@ export class PublicatorComponent{
         private http: Http,
         private htppC: HttpClient
     ){
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         this.loadAreas()
     }
 
@@ -66,21 +67,27 @@ export class PublicatorComponent{
         this.status = '3';
         console.log(this.folio)
         let problemOperation: Observable<Problem[]>;
-        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, '1', 'PROGRA');
+        this.problem = new Problem(this.folio, this.title, this.content, this.currentUser.username, 'PROGRA');
         problemOperation = this.publishProblemService.addProblem(this.problem);
 
         problemOperation.subscribe(
-            comments => {
-                console.log(`PROBLEMS: ${comments}`)
-              EmitterService.get(this.listId).emit(comments);
-              this.problem = new Problem('','','','', '','');
-              if(this.editing)this.editing = !this.editing;
+            problem => {
+                console.log(`PROBLEMS: ${problem}`)
+              //EmitterService.get(this.listId).emit(comments);
+              this.problem = new Problem('','','','', '');
+              EmitterService.get(this.listId).emit(problem)
             },
             err =>{
               console.log(err);
             });
     }
-
+    
+    ngOnChanges() {
+        EmitterService.get(this.listId).subscribe((problems:Problem) => {
+            console.log(`Something happenned ||PUBLICATOR||`)
+            console.log(problems);
+        })
+    }
 
 
 }

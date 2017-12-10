@@ -6,12 +6,12 @@ import { EmitterService } from '../services/emmiter.service';
 import { StatusService } from '../services/status.service';
 
 @Component({
-    selector: 'publication-container-component',
-    templateUrl: 'publication-container.component.html',
-    styleUrls: ['publication-container.component.css']
+    selector: 'area-container-component',
+    templateUrl: 'area-container.component.html',
+    styleUrls: ['area-container.component.css']
 })
 
-export class PublicationContainerComponent implements OnInit, OnChanges{
+export class AreaContainerComponent implements OnInit, OnChanges{
     constructor(private problemService: PublishProblemService, private statusService: StatusService){}
 
     @Input('listId')listId:string;

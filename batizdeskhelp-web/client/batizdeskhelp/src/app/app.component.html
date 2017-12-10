@@ -1,4 +1,10 @@
 <menu-bar-component [username]="username"></menu-bar-component>
-<publicator-component></publicator-component>
-<publication-component [status]="1" [area]="area" [username]="username" [content]="content" [title]="title"></publication-component>
-<publication-container-component></publication-container-component>
+<div *ngIf="isLogged">
+    <publicator-component [listId]="problemContainerListId"></publicator-component>
+    <publication-component [status]="1" [area]="area" [username]="username" [content]="content" [title]="title"></publication-component>
+    <publication-container-component [listId]="problemContainerListId"></publication-container-component>
+</div>
+<div *ngIf="!isLogged">
+    <search-component [listId]="listId"></search-component>
+    <publication-component [listId]="listId"></publication-component>
+</div>

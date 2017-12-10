@@ -1,0 +1,9 @@
+<div class="publicator-container" fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20">
+    <mat-card>
+        <form (ngSubmit)="searchProblem()">
+            <td-search-input placeholder="Folio" [showUnderline]="false" [debounce]="500" (searchDebounce)="folio = $event" (search)="folio = $event" (clear)="searchInputTerm = ''">
+            </td-search-input>
+            <button type="submit" mat-raised-button color="{{[color]}}">Buscar</button>
+        </form>
+    </mat-card>    
+</div>
