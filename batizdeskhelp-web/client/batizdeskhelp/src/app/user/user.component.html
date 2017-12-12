@@ -1,0 +1,104 @@
+<mat-list>    
+    <h3 matSubheader>Usuarios</h3>  
+    <mat-accordion>
+  <div *ngFor="let user of users">
+    <div *ngIf="!usersHTML[searchUser(user)].userHTML">
+          <mat-list-item>
+            <mat-icon matListAvatar>account_box</mat-icon>
+            <h4 matLine>{{user.username}}</h4>
+            <button mat-icon-button color="primary">
+                <mat-icon aria-label="Editar" (click)="editUser(user)">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary">
+                <mat-icon aria-label="Eliminar" (click)="removeUser(user)">clear</mat-icon>
+            </button>
+            <br>
+              <p matLine>{{user.email}}</p>
+          </mat-list-item>
+          <mat-divider matInset></mat-divider>
+    </div>
+    <div *ngIf="usersHTML[searchUser(user)].userHTML">
+        <form (ngSubmit)="editUserConfirm()" fxLayout="column" fxLayoutAlign="space-between">
+                <mat-form-field class="example-full-width">
+                        <input required="true" maxlength="255" class="form-control from-group" matInput placeholder="Nombre de Usuario" [formControl]="edtusernameFormControl" [(ngModel)]="edtusername" name="edtusername" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="edtusernameFormControl.hasError('required')">
+                          Ingresa un nombre de usuario
+                        </mat-error>
+                        <mat-error *ngIf="edtusernameFormControl.hasError('minLength')">
+                            Nombre de Usuario muy corto
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                          <input type="email" required="true" class="form-control from-group" matInput placeholder="email" [formControl]="edtemailFormControl" [(ngModel)]="edtemail" name="edtemail" [errorStateMatcher]="matcher">
+                          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                              Ingresa un correo válido
+                          </mat-error>
+                          <mat-error *ngIf="emailFormControl.hasError('required')">
+                              Ingresa un correo electrónico
+                          </mat-error>
+                      </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                          <input type="password" required="true" class="form-control from-group" matInput placeholder="Contraseña" [formControl]="edtpasswordFormControl" [(ngModel)]="edtpassword" name="edtpassword" [errorStateMatcher]="matcher">
+                          <mat-error *ngIf="edtpasswordFormControl.hasError('required')">
+                              Ingresa una contraseña
+                          </mat-error>
+                          <mat-error *ngIf="edtpasswordFormControl.hasError('minLength')">
+                              Contraseña muy corta
+                          </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input type="password" required="true" class="form-control from-group" matInput placeholder="Confirmar Contraseña" [formControl]="edtconfirmPasswordFormControl" [(ngModel)]="edtconfirmPassword" name="edtconfirmPassword" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="edtconfirmPasswordFormControl.hasError('required')">
+                            Confirma tu contraseña
+                        </mat-error>
+                        <mat-error *ngIf="edtconfirmPasswordFormControl.hasError('invalid')">
+                            Las contraseñas no coinciden
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" type="submit">Confirmar</button>
+                    <button mat-raised-button color="warn" (click)="toggleEdit(user)">Cancelar</button>
+        </form>
+    </div>
+  </div>
+  </mat-accordion>
+  </mat-list>
+  <form form (ngSubmit)="addUser()" fxLayout="column" fxLayoutAlign="space-between">
+      <mat-form-field class="example-full-width">
+          <input required="true" maxlength="255" class="form-control from-group" matInput placeholder="Nombre de Usuario" [formControl]="usernameFormControl" [(ngModel)]="username" name="username" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+            Ingresa un nombre de usuario
+          </mat-error>
+          <mat-error *ngIf="usernameFormControl.hasError('minLength')">
+              Nombre de Usuario muy corto
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+            <input type="email" required="true" class="form-control from-group" matInput placeholder="email" [formControl]="emailFormControl" [(ngModel)]="email" name="email" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Ingresa un correo válido
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+                Ingresa un correo electrónico
+            </mat-error>
+        </mat-form-field>
+      <mat-form-field class="example-full-width">
+            <input type="password" required="true" class="form-control from-group" matInput placeholder="Contraseña" [formControl]="passwordFormControl" [(ngModel)]="password" name="password" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="passwordFormControl.hasError('required')">
+                Ingresa una contraseña
+            </mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('minLength')">
+                Contraseña muy corta
+            </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <input type="password" required="true" class="form-control from-group" matInput placeholder="Confirmar Contraseña" [formControl]="confirmPasswordFormControl" [(ngModel)]="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+              Confirma tu contraseña
+          </mat-error>
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('invalid')">
+              Las contraseñas no coinciden
+          </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="{{color}}" type="submit">Agregar</button>
+      
+  </form>

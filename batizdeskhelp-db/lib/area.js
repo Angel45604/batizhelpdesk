@@ -35,10 +35,19 @@ module.exports = function setupArea (AreaModel) {
         })
     }
 
+    function deleteArea (area) {
+        return AreaModel.destroy({
+            where: {
+                area
+            }
+        })
+    }
+
     return {
         createOrUpdate,
         findAll,
         findById,
-        findByArea
+        findByArea,
+        deleteArea
     }
 }

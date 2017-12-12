@@ -1,0 +1,30 @@
+<mat-list>
+    <h3 matSubheader>Cosas</h3>
+    <form (ngSubmit)="updateDays()">
+    <mat-list-item>
+        <mat-icon matListAvatar>label</mat-icon>
+        <h4 matLine>Verde</h4>
+        <mat-form-field matLine class="example-full-width">
+            <input matInput placeholder="Verde" value="{{green}}" [(ngModel)]="green" name="green">
+          </mat-form-field>
+    </mat-list-item>
+    <mat-divider matInset></mat-divider>
+    <mat-list-item>
+        <mat-icon matListAvatar>label</mat-icon>
+        <h4 matLine>Naranja</h4>
+        <mat-form-field matLine class="example-full-width">
+            <input matInput placeholder="Naranja" value="{{orange}}" [(ngModel)]="orange" name="orange">
+          </mat-form-field>
+    </mat-list-item>
+    <mat-divider matInset></mat-divider>
+    <mat-list-item>
+        <mat-icon matListAvatar>label</mat-icon>
+        <h4 matLine>Rojo</h4>
+        <mat-form-field matLine class="example-full-width">
+            <input matInput placeholder="Rojo" value="{{red}}" [(ngModel)]="red" name="red">
+          </mat-form-field>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="accent" type="submit">Confirmar</button>
+</form>
+  </mat-list>

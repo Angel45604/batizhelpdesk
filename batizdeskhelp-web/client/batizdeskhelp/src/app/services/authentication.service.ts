@@ -9,11 +9,15 @@ export class AuthenticationService {
     
     isLogged() {
         if(!sessionStorage.getItem('currentUser')) {
-            console.log(`NO`)
             return false;
         }
-        console.log(`YES`)
         return true;
+    }
+
+    isAdmin(): boolean {
+        const user = sessionStorage.getItem('currentUser');
+        console.log(user);    
+        return false;
     }
 
     login(username: string, password: string) {      
@@ -28,7 +32,7 @@ export class AuthenticationService {
                 if (user) {
                     // store user
                     sessionStorage.setItem('currentUser', JSON.stringify(user));
-                    sessionStorage.setItem('currentUser_token', JSON.stringify(token));
+                    sessionStorage.setItem('id_token', token);
                     console.log(`sessionStorage: ${sessionStorage.getItem('currentUser')}`);
                 }else {
                     console.log('Hubo un error');

@@ -6,13 +6,17 @@ const setupDatabase = require('../lib/db')
 module.exports = function setupRoleModel (config) {
   const sequelize = setupDatabase(config)
 
-  return sequelize.define('role', {
+  return sequelize.define('permission', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    role: {
+    permission: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    username: {
       type: Sequelize.STRING,
       allowNull: false
     }

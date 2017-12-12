@@ -28,3 +28,15 @@ img{
   input {
       font-size: 17px;
   }
+
+  @media (max-width: 600px) {
+    .search {
+      display: none;
+    }
+
+    mat-form-field {
+        max-width: 35%;
+        font-size: 15px;
+    }
+    
+  }

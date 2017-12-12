@@ -21,7 +21,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
-
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 //Covalent
 import { CovalentLayoutModule, CovalentStepsModule /*, any other modules */ } from '@covalent/core';
@@ -32,7 +35,8 @@ import { CovalentMarkdownModule } from '@covalent/markdown';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 import { CovalentSearchModule } from '@covalent/core';
 import { CovalentExpansionPanelModule } from '@covalent/core';
-
+import { CovalentMessageModule } from '@covalent/core';
+import { CovalentDataTableModule } from '@covalent/core';
 
 import { StepperComponent } from './stepper/stepper.component';
 import { HomeComponent} from './home/home.component';
@@ -46,7 +50,10 @@ import { PublicationContainerComponent } from './publicaton-container/publicatio
 import { SearchComponent } from './search/search.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AreaComponent } from './area/area.component';
-import { AreaContainerComponent } from './area-container/area-container.component';
+import { UserComponent } from './user/user.component';
+import { ProblemComponent } from './problem/problem.component';
+import { ProblemContainerComponent} from './problem-container/problem-container.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 import { AuthGuard } from './guard/auth.guard';
 import { AuthenticationService } from './services/authentication.service';
@@ -55,13 +62,13 @@ import { EmitterService } from './services/emmiter.service';
 import { PublishProblemService } from './services/publishProblem.service';
 import { StatusService } from './services/status.service';
 import { ConfigService } from './services/config.service';
+import { UserService } from './services/user.service';
 
 
 const appRoutes: Routes = [
-  {path: '', component: AppComponent,},
-  {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, },
-  {path: 'settings', component: SettingsComponent},
+  {path: '', component: AppComponent},
+  {path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
+  {path: 'settings', component: SettingsComponent, canActivate:[AuthGuard]},
   {path: '**', component: Page404Component},
 ];
 @NgModule({
@@ -78,7 +85,11 @@ const appRoutes: Routes = [
     PublicationContainerComponent,
     SearchComponent,
     SettingsComponent,
-    AreaComponent
+    AreaComponent,
+    UserComponent,
+    ProblemComponent,
+    ProblemContainerComponent,
+    ConfigurationComponent
   ],
   imports: [
     //Covalent
@@ -91,6 +102,8 @@ const appRoutes: Routes = [
     CovalentDynamicFormsModule,
     CovalentSearchModule,
     CovalentExpansionPanelModule,
+    CovalentMessageModule,
+    CovalentDataTableModule,
     
     FlexLayoutModule,
     BrowserModule,
@@ -107,6 +120,10 @@ const appRoutes: Routes = [
     MatCardModule,
     MatSelectModule,
     MatListModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
@@ -120,6 +137,7 @@ const appRoutes: Routes = [
     HttpModule, 
     StatusService,
     ConfigService,
+    UserService
   ],
   bootstrap: [InitComponent]
 })

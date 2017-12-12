@@ -1,38 +1,60 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
 import { Area } from '../models/area';
 import { Problem } from '../models/problem';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class PublishProblemService {
      constructor (private http: Http) {}
      private statusurl = 'http://localhost:3000/api/problems';  
 
-     getProblems() : Observable<Problem[]>{
-         return this.http.get(this.statusurl)
+     getProblems(){
+         console.log(sessionStorage.getItem('id_token'))
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') }); // ... Set content type to JSON
+        let options = new RequestOptions({ headers: headers });
+         return this.http.get(this.statusurl, {headers: headers})
                          .map((res:Response) => res.json())
-                         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
         
      }
 
      getProblemByFolio(folio: string) {
-        return this.http.get(this.statusurl+'/'+folio)
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
+        return this.http.get(this.statusurl+'/'+folio, {headers: headers})
                         .map((res:Response) => res.json())
-                        .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+     }
+
+     getProblemsByUser(user) {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
+         return this.http.get(`${this.statusurl}/username/${user.username}`, {headers: headers})
+                         .map((res:Response) => res.json())
+     }
+
+     getProblemsByArea(area) {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
+         return this.http.get(`${this.statusurl}/area/${area}`, {headers: headers})
+                         .map((res:Response) => res.json())
+     }
+
+     getProblemsByUserAndArea(username, area) {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
+         return this.http.get(`${this.statusurl}/${username}/${area}`, {headers: headers})
+                         .map((res:Response) => res.json()).toPromise()
      }
 
      addProblem (body: Object) {
         let bodyString = JSON.stringify(body); // Stringify payload
         console.log(bodyString)
-        let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') }); // ... Set content type to JSON
         let options = new RequestOptions({ headers: headers }); // Create a request option
 
-        return this.http.post(this.statusurl, bodyString, options) // ...using post request
+        return this.http.post(this.statusurl, bodyString, {headers:headers}) // ...using post request
                          .map((res:Response) => {return res.json()}) // ...and calling .json() on the response to return data
-                         .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
     }     
+
+    removeProblem (folio: string){
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
+        return this.http.delete(`${this.statusurl}/folio/${folio}`, {headers: headers}) // ...using put request
+                         .map(res => res ) // ...now we return data
+    }
 }

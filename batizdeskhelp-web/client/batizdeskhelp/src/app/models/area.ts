@@ -3,4 +3,5 @@ export class Area {
     area: string;
     createdAt: string;
     updatedAt: string;
+    isDeleting: false
 }

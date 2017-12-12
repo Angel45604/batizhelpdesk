@@ -66,6 +66,15 @@ module.exports = function setupProblem (ProblemModel) {
     })
   }
 
+  function findByUsernameAndArea (username, area) {
+    return ProblemModel.findAll({
+      where: {
+        area,
+        username
+      }
+    })
+  }
+
   function checkProblem (folio) {
 
     return ProblemModel.update({
@@ -93,6 +102,7 @@ module.exports = function setupProblem (ProblemModel) {
     findAllUncurrentActive,
     findByUsername,
     findByArea,
+    findByUsernameAndArea,
     checkProblem,
     deleteProblem
   }

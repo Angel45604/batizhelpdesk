@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, OnChanges {
   title='TITULAZO';
   content='CONTENIDAZO';
   isLogged: boolean;
+  isAdmin: boolean;
   
   listId = 'PROBLEMSTEST';
   problemContainerListId = 'PROBLEM_CONTAINER_LIST_ID'
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit, OnChanges {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
       console.log(this.currentUser)
       this.username = this.currentUser.username;
+      this.isAdmin = this.currentUser.admin;
     }
   }
 

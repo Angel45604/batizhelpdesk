@@ -20,14 +20,18 @@ export class PublicationContainerComponent implements OnInit, OnChanges{
     problem: any;
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
     isVisible = true;
+    isProblem:boolean = false;
+    @Input('isAdmin')isAdmin:boolean;
     loadProblems() {
         this.problemService.getProblems()
         .subscribe(
             problems => {
-                this.checkStatus(problems[0])
-
-                this.problems = problems
-                console.log(problems);
+                if(problems.length > 0) {
+                    this.checkStatus(problems[0])
+                    this.isProblem = true;
+                    this.problems = problems
+                    console.log(problems);
+                }
             },
             err =>{
                 console.log(err);
@@ -35,13 +39,19 @@ export class PublicationContainerComponent implements OnInit, OnChanges{
     }
 
     checkStatus(problem) {
+        if(problem.status) {
+            return '1';
+        }
         let date = new Date(problem.createdAt);
-        console.log(`DATE INMILIS: ${date.getTime()}`);
-        console.log(this.statusService.checkStatus(date));
+        //console.log(problem);
+        //console.log(`DATE INMILIS: ${date.getTime()}`);
+        //console.log(this.statusService.checkStatus(date));
         return this.statusService.checkStatus(date);
     }
 
     ngOnInit(){
+        this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        this.isAdmin = this.currentUser.admin;
         this.loadProblems();
         }
     

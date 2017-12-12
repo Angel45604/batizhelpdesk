@@ -1,0 +1,24 @@
+<mat-list>    
+  <h3 matSubheader>Areas</h3>    
+<div *ngFor="let area of areas">
+        <mat-list-item>
+            <h4 matLine>{{area.area}}</h4>
+            <button mat-icon-button color="primary">
+                <mat-icon aria-label="Example icon-button with a heart icon" (click)="removeArea(area)">clear</mat-icon>
+            </button><br>
+          <div matLine *ngIf="area.isDeleting">
+              <td-message label="¿Seguro que deseas eliminar el Area?"color="warn" icon="error">
+                  <button td-message-actions mat-button (click)="confirmDelete(area.area)">SI</button>
+                  <button td-message-actions mat-button (click)="isDeletingArea[area.id]=false">NO</button>
+              </td-message>
+          </div>
+        </mat-list-item>
+        <mat-divider matInset></mat-divider>
+</div>
+</mat-list>
+<form (ngSubmit)="addArea()" fxLayout="row" fxLayoutAlign="space-between">
+    <mat-form-field class="example-full-width">
+        <input required="true" maxlength="255" class="form-control" matInput placeholder="Area" [(ngModel)]="area" name="area">
+    </mat-form-field>
+    <button mat-raised-button color="primary">Agregar</button>
+</form>

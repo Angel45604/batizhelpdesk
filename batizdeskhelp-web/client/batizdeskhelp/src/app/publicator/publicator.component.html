@@ -2,18 +2,27 @@
     <mat-card>
         <form (ngSubmit)="submitProblem()">
             <mat-form-field class="example-full-width">
-                <input maxlength="255" class="form-control" matInput placeholder="Titulo" [(ngModel)]="title" name="title">
+                <input maxlength="255"  class="form-control from-group" [formControl]="titleFormControl" matInput placeholder="Asunto" [(ngModel)]="title" name="title" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="titleFormControl.hasError('required')">
+                    Ingresa un Asunto
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <textarea  maxlength="255" class="form-control" matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="content" name="content"></textarea>
-                <mat-hint align="end">{{contentValue}} / 256</mat-hint>
+                <textarea  maxlength="255" class="form-control from-group" [formControl]="descriptionFormControl" matInput placeholder="Descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" [(ngModel)]="content" name="content" [errorStateMatcher]="matcher"></textarea>
+                <mat-hint align="end">{{contentValue}} / 255</mat-hint>
+                <mat-error *ngIf="descriptionFormControl.hasError('required')">
+                        Ingresa una Descripcion
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <mat-select placeholder="Area" [(ngModel)]="area" name="area">
+                <mat-select placeholder="Area" class="form-control from-group" [formControl]="areaFormControl" [(ngModel)]="area" name="area" [errorStateMatcher]="matcher">
                   <mat-option *ngFor="let area of areas" [value]="area.value">
                     {{ area.viewValue }}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="areaFormControl.hasError('required')">
+                        Elige un area
+                </mat-error>
               </mat-form-field>
                   <button type="submit" mat-raised-button>Enviar</button>
         </form>

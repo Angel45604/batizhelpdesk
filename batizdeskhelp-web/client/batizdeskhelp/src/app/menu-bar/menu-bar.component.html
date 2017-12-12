@@ -1,9 +1,11 @@
 <mat-toolbar color="primary" class="content" fxLayout="row">
-    <span class="logo"><img src="../../assets/batizhelpdesk.png"></span>
+    <a routerLink="/"><span class="logo"><img src="../../assets/batizhelpdesk.png"></span></a>
     <span class="spacer"></span>
     <div *ngIf="isLogged()">
-        <td-search-box backIcon="arrow_back" placeholder="Folio" [showUnderline]="false" [debounce]="500" [alwaysVisible]="false" (searchDebounce)="searchInputTerm = $event" (search)="searchInputTerm = $event" (clear)="searchInputTerm = ''">
+        <form (ngSubmit)="search()">
+            <td-search-box class="search" backIcon="arrow_back" placeholder="Folio" [showUnderline]="false" [debounce]="0" [alwaysVisible]="false" (searchDebounce)="folio = $event" (search)="folio = $event">
         </td-search-box>
+        </form>
     </div>
     <span>{{username}}</span>
     <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isLogged()">
@@ -26,8 +28,19 @@
         <mat-icon>dialpad</mat-icon>
         <span>Cerrar Sesion</span>
     </button>
-    <button mat-menu-item disabled>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Notificaciones</span>
-    </button>
+    <div *ngIf="isAdmin">
+    <a routerLink="/settings">
+        <button mat-menu-item >
+            <mat-icon>settings</mat-icon>
+            <span>Configuracion</span>
+        </button>
+    </a>
+    <a routerLink="/home">
+        <button mat-menu-item>
+            <mat-icon>search</mat-icon>
+            <span>Buscar</span>
+        </button>
+    </a>
+    
+    </div>
     </mat-menu>

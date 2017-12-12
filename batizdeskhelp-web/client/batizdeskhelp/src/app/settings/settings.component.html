@@ -1,4 +1,4 @@
-<menu-bar-component></menu-bar-component>
+<menu-bar-component [isAdmin]="isAdmin"></menu-bar-component>
 <!--areas
 editdays
 users
@@ -13,26 +13,7 @@ posts-->
                   <span>Area</span>
                 </mat-toolbar>
               </ng-template>
-              <mat-list>
-                <h3 matSubheader>Metadata</h3>
-                <mat-list-item>
-                    <mat-icon matListAvatar>account_box</mat-icon>
-                    <h4 matLine>John Jameson</h4>
-                    <p matLine>Owner</p>
-                </mat-list-item>
-                <mat-divider matInset></mat-divider>
-                <mat-list-item>
-                    <mat-icon matListAvatar>description</mat-icon>
-                    <h4 matLine>An item description</h4>
-                    <p matLine>Description</p>
-                </mat-list-item>
-                <mat-divider matInset></mat-divider>
-                <mat-list-item>
-                    <mat-icon matListAvatar>vpn_key</mat-icon>
-                    <h4 matLine>1141e8e8-8d24-4956-93c2</h4>
-                    <p matLine>API Key</p>
-                </mat-list-item>
-              </mat-list>
+              <area-component></area-component>
             </td-expansion-panel>
             <br>
             <td-expansion-panel disableRipple>
@@ -41,26 +22,7 @@ posts-->
                     <span>Usuarios</span>
                   </mat-toolbar>
                 </ng-template>
-                <mat-list>
-                  <h3 matSubheader>Metadata</h3>
-                  <mat-list-item>
-                      <mat-icon matListAvatar>account_box</mat-icon>
-                      <h4 matLine>John Jameson</h4>
-                      <p matLine>Owner</p>
-                  </mat-list-item>
-                  <mat-divider matInset></mat-divider>
-                  <mat-list-item>
-                      <mat-icon matListAvatar>description</mat-icon>
-                      <h4 matLine>An item description</h4>
-                      <p matLine>Description</p>
-                  </mat-list-item>
-                  <mat-divider matInset></mat-divider>
-                  <mat-list-item>
-                      <mat-icon matListAvatar>vpn_key</mat-icon>
-                      <h4 matLine>1141e8e8-8d24-4956-93c2</h4>
-                      <p matLine>API Key</p>
-                  </mat-list-item>
-                </mat-list>
+                <user-component></user-component>
               </td-expansion-panel>
               <br>
               <td-expansion-panel disableRipple>
@@ -69,26 +31,7 @@ posts-->
                       <span>Problemas</span>
                     </mat-toolbar>
                   </ng-template>
-                  <mat-list>
-                    <h3 matSubheader>Metadata</h3>
-                    <mat-list-item>
-                        <mat-icon matListAvatar>account_box</mat-icon>
-                        <h4 matLine>John Jameson</h4>
-                        <p matLine>Owner</p>
-                    </mat-list-item>
-                    <mat-divider matInset></mat-divider>
-                    <mat-list-item>
-                        <mat-icon matListAvatar>description</mat-icon>
-                        <h4 matLine>An item description</h4>
-                        <p matLine>Description</p>
-                    </mat-list-item>
-                    <mat-divider matInset></mat-divider>
-                    <mat-list-item>
-                        <mat-icon matListAvatar>vpn_key</mat-icon>
-                        <h4 matLine>1141e8e8-8d24-4956-93c2</h4>
-                        <p matLine>API Key</p>
-                    </mat-list-item>
-                  </mat-list>
+                  <problem-component></problem-component>
                 </td-expansion-panel>
                 <br>
                 <td-expansion-panel disableRipple>
@@ -97,26 +40,7 @@ posts-->
                         <span>Otrascosas</span>
                       </mat-toolbar>
                     </ng-template>
-                    <mat-list>
-                      <h3 matSubheader>Metadata</h3>
-                      <mat-list-item>
-                          <mat-icon matListAvatar>account_box</mat-icon>
-                          <h4 matLine>John Jameson</h4>
-                          <p matLine>Owner</p>
-                      </mat-list-item>
-                      <mat-divider matInset></mat-divider>
-                      <mat-list-item>
-                          <mat-icon matListAvatar>description</mat-icon>
-                          <h4 matLine>An item description</h4>
-                          <p matLine>Description</p>
-                      </mat-list-item>
-                      <mat-divider matInset></mat-divider>
-                      <mat-list-item>
-                          <mat-icon matListAvatar>vpn_key</mat-icon>
-                          <h4 matLine>1141e8e8-8d24-4956-93c2</h4>
-                          <p matLine>API Key</p>
-                      </mat-list-item>
-                    </mat-list>
+                    <configuration-component></configuration-component>
                   </td-expansion-panel>
             
           </td-layout-card-over>

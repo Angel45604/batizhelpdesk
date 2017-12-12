@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable} from 'rxjs/Rx';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -11,6 +11,7 @@ import { EmitterService } from '../services/emmiter.service';
 import { Area } from '../models/area';
 import { UUID } from 'angular2-uuid';
 import { ResponseContentType } from '@angular/http/';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -20,18 +21,19 @@ import { ResponseContentType } from '@angular/http/';
     providers: [PublishProblemService]
 })
 
-export class SearchComponent implements OnChanges{
-    folio: string;
+export class SearchComponent implements OnChanges, OnInit{
 
     @Input()editId:string;
     @Input()listId:string;
 
+    @Input('folio')folio:string;
     @Input('color')color:string;
 
     constructor(
         private publishProblemService: PublishProblemService,
         private http: Http,
-        private htppC: HttpClient
+        private htppC: HttpClient,
+        public snackBar: MatSnackBar
     ){
     }
 
@@ -48,6 +50,10 @@ export class SearchComponent implements OnChanges{
             },
             err => {
                 this.color = 'warn';
+                let snackBarNotFound = this.snackBar.open('No se encontraron resultados');
+                setTimeout( () => {
+                    snackBarNotFound.dismiss()
+                },1500);
             }
         )
         
@@ -58,11 +64,14 @@ export class SearchComponent implements OnChanges{
         // with the event payload
         console.log('SOMETHING HAPENNED')
         EmitterService.get(this.listId).subscribe((folio) => {
-            console.log(`Something Hapenned`)
+            console.log(`Something Hapenned ${folio}`)
             console.log(folio);
         });
     }
 
-
+    ngOnInit() {
+        console.log(`ON SEARCH ${this.folio}`)
+        this.searchProblem();
+    }
 
 }

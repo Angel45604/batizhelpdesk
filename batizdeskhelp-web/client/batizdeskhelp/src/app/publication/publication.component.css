@@ -4,6 +4,10 @@ mat-card-header {
     margin:0;
 }
 
+.folio {
+    font-size: 10px;
+}
+
 .green {
     background-color:#4caf50 ;
     box-shadow: 1px 1px 2px #888888;

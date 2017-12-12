@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function setupUser (UserModel) {
+module.exports = function setupUser (UserModel, PermissionModel) {
 
   async function createOrUpdate (user) {
     const cond = {
@@ -18,6 +18,10 @@ module.exports = function setupUser (UserModel) {
 
     const result = await UserModel.create(user)
     return result.toJSON()
+  }
+
+  function findAll() {
+    return UserModel.findAll()
   }
 
   function findById (id) {
@@ -46,11 +50,20 @@ module.exports = function setupUser (UserModel) {
     })
   }
 
+  function deleteUser (email) {
+    return UserModel.destroy({
+      where: {
+        email
+      }
+    })
+  }
   return {
+    findAll,
     createOrUpdate,
     findById,
     findByUserName,
     findByEmail,
-    validPassword
+    validPassword,
+    deleteUser
   }
 }

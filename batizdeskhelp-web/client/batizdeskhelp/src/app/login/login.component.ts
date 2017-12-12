@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
+    isAdmin:boolean;
 
     constructor(
         private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
+        this.isAdmin = this.authenticationService.isAdmin();
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';

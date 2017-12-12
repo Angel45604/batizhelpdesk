@@ -8,6 +8,7 @@
                         <span>{{area}}</span>
                         <span class="spacer"></span><span class="date">{{date | date:'MM/dd/yyyy'}}</span>
                     </div>
+                    <span class="folio">{{folio}}</span>
                 </mat-card-subtitle>
             </div>
         </mat-card-header>
@@ -17,11 +18,15 @@
                     {{content}} 
             </p>
         </mat-card-content>
-        <div *ngIf="!admin">
-            <mat-card-actions>
-                <button mat-button>B1</button>
-                <button mat-button>B2</button>
-            </mat-card-actions>
+        <div *ngIf="isAdmin">                    
+                    <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center" fxFlexOffset="20" *ngIf="isVisible">
+                        <div *ngIf="(status!=1)">
+                            <button (click)="checkProblem()" type="submit" mat-raised-button>Resuelto</button>
+                        </div>
+                        <div>
+                            <button (click)="deleteProblem()" mat-raised-button color="warn">{{confirm}}</button>
+                        </div>
+                    </mat-card-actions>                
         </div>
     </mat-card>
 </div>

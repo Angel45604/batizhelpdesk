@@ -6,17 +6,18 @@ import { EmitterService } from '../services/emmiter.service';
 import { StatusService } from '../services/status.service';
 
 @Component({
-    selector: 'area-container-component',
-    templateUrl: 'area-container.component.html',
-    styleUrls: ['area-container.component.css']
+    selector: 'problem-container-component',
+    templateUrl: 'problem-container.component.html',
+    styleUrls: ['problem-container.component.css']
 })
 
-export class AreaContainerComponent implements OnInit, OnChanges{
+export class ProblemContainerComponent implements OnInit, OnChanges{
     constructor(private problemService: PublishProblemService, private statusService: StatusService){}
 
     @Input('listId')listId:string;
 
     problems:Problem[];
+    isProblem:boolean = false;
     problem: any;
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
     isVisible = true;
@@ -25,7 +26,7 @@ export class AreaContainerComponent implements OnInit, OnChanges{
         .subscribe(
             problems => {
                 this.checkStatus(problems[0])
-
+                this.isProblem = true;
                 this.problems = problems
                 console.log(problems);
             },
@@ -36,8 +37,8 @@ export class AreaContainerComponent implements OnInit, OnChanges{
 
     checkStatus(problem) {
         let date = new Date(problem.createdAt);
-        console.log(`DATE INMILIS: ${date.getTime()}`);
-        console.log(this.statusService.checkStatus(date));
+        //console.log(`DATE INMILIS: ${date.getTime()}`);
+        //console.log(this.statusService.checkStatus(date));
         return this.statusService.checkStatus(date);
     }
 

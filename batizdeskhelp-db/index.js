@@ -3,56 +3,56 @@
 const setupDatabase = require('./lib/db')
 const setupAreaModel = require('./models/area')
 const setupProblemModel = require('./models/problem')
-const setupRoleModel = require('./models/role')
+const setupPermissionModel = require('./models/permission')
 const setupStatusModel = require('./models/status')
 const setupUserModel = require('./models/user')
+const setupConfigModel = require('./models/config')
 
 const setupArea = require('./lib/area')
 const setupProblem = require('./lib/problem')
 const setupStatus = require('./lib/status')
 const setupUser = require('./lib/user')
+const setupConfig = require('./lib/config')
+const setupPermission = require('./lib/permission')
 
 module.exports = async function (config) {
   const sequelize = setupDatabase(config)
   const AreaModel = setupAreaModel(config)
   const ProblemModel = setupProblemModel(config)
-  const RoleModel = setupRoleModel(config)
+  const PermissionModel = setupPermissionModel(config)
   const StatusModel = setupStatusModel(config)
   const UserModel = setupUserModel(config)
+  const ConfigModel = setupConfigModel(config)
 
-  UserModel.belongsToMany(RoleModel, {through: 'UserRole'})
-  RoleModel.belongsToMany(UserModel, {through: 'UserRole'})
+  UserModel.belongsToMany(PermissionModel, {through: 'user_permission'})
+  PermissionModel.belongsToMany(UserModel, {through: 'user_permission'})
 
+  UserModel.bulkCreate([
+    {username: 'Angel', password: 'angel123', email: 'angel.marcos@live.com', admin: true},
+    {username: 'Mario', password: 'mario123', email: 'mario.chavez@live.com', admin: false}
+  ])
 
   await sequelize.authenticate()
 
   if (config.setup) {
     await sequelize.sync({ force: true })
   }
-
-  await StatusModel.bulkCreate([
-    {status: 'red'},
-    {status: 'yellow'},
-    {status: 'green'},
-    {status: 'check'}
-  ], { fields: ['status'] }).then((statuses) => {
-    console.log(statuses)
-  })
  
-
   // sequelize.sync()
 
   const Area = setupArea(AreaModel)
   const Problem = setupProblem(ProblemModel)
-  const Role = {}
+  const Permission = setupPermission(PermissionModel)
   const Status = setupStatus(StatusModel)
   const User = setupUser(UserModel)
+  const Config = setupConfig(ConfigModel)
 
   return {
     Area,
     Problem,
-    Role,
+    Permission,
     Status,
-    User
+    User,
+    Config
   }
 }

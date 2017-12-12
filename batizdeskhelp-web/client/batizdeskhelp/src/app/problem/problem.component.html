@@ -1,0 +1,34 @@
+<div class="publicator-container" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-card>
+            <form (ngSubmit)="search()">
+                    <!--<td-search-box backIcon="arrow_back" placeholder="Buscar por Asunto" [showUnderline]="true" [debounce]="500" [alwaysVisible]="true" (searchDebounce)="title = $event" (search)="searchInputTerm = $event" (clear)="searchInputTerm = ''">
+                        </td-search-box>-->
+                        <mat-form-field class="example-full-width">
+                                <mat-select multiple placeholder="Buscar por Usuarios" [(ngModel)]="userSrch" name="userSrch">
+                                  <mat-option *ngFor="let user of users" [value]="user.value">
+                                    {{ user.viewValue }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-select multiple placeholder="Buscar por Areas" [(ngModel)]="area" name="area">
+                      <mat-option *ngFor="let area of areas" [value]="area.value">
+                        {{ area.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <!--<mat-checkbox [(ngModel)]="solved" name="solved">Resueltos</mat-checkbox>-->
+                    <button type="submit" mat-raised-button>Buscar</button>
+                  </div>
+            </form>
+        </mat-card>    
+    </div>
+    <td-data-table
+    [data]="basicData"
+    [columns]="configWidthColumns">
+    <!--<ng-template tdDataTableTemplate="setStatus" let-value="value">
+      <mat-slide-toggle [checked]="value" >Checked</mat-slide-toggle>
+    </ng-template>-->
+  </td-data-table>
+    <td-message *ngIf="isNothing" label="Sin Resultados" sublabel="No se encontraron problemas con los criterios de búsqueda" color="accent" icon="info"></td-message>
