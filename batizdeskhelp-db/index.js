@@ -7,6 +7,7 @@ const setupPermissionModel = require('./models/permission')
 const setupStatusModel = require('./models/status')
 const setupUserModel = require('./models/user')
 const setupConfigModel = require('./models/config')
+const setupNNModel = require('./models/nn')
 
 const setupArea = require('./lib/area')
 const setupProblem = require('./lib/problem')
@@ -23,7 +24,8 @@ module.exports = async function (config) {
   const StatusModel = setupStatusModel(config)
   const UserModel = setupUserModel(config)
   const ConfigModel = setupConfigModel(config)
-
+  setupNNModel(UserModel, AreaModel);
+  
   UserModel.belongsToMany(PermissionModel, {through: 'user_permission'})
   PermissionModel.belongsToMany(UserModel, {through: 'user_permission'})
 

@@ -57,6 +57,9 @@ module.exports = function setupUser (UserModel, PermissionModel) {
       }
     })
   }
+  function addArea(area){
+    user.addArea(area);
+  }
   return {
     findAll,
     createOrUpdate,
