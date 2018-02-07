@@ -38,7 +38,7 @@ api.use('*', async (req, res, next) => {
   next()
 })
 
-api.post('/problems', auth(config.auth),async (req, res, next) => {
+api.post('/problems', auth(config.auth), async (req, res, next) => {
   const folio = req.body.folio
   debug(`BODY: ${JSON.stringify(req.body)} FOLIO: ${req.body.folio}`)
   const title = req.body.title
