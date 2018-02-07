@@ -209,6 +209,25 @@ api.post('/users', auth(config.auth), async(req, res, next) => {
   res.send(user)
 })
 
+api.post('/users/area', async(req, res, next) => {
+  debug('A request has come to /users/area')
+  const area = req.body.area
+  const email = req.body.email
+  console.log(req.params)
+  console.log(req.body)
+  console.log(req.body.area)
+  let newarea = {
+    area
+  }
+  debug(`Area: ${newarea}`)
+  try {
+    console.log(await User.addArea(newarea, email))
+  } catch(e) {
+    return next(e)
+  }
+  res.send(newarea)
+})
+
 api.get('/permission', async (req, res, next) => {
   debug(`A request has come to /permission`)
   debug(Permission)

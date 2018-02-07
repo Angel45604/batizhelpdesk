@@ -57,8 +57,12 @@ module.exports = function setupUser (UserModel, PermissionModel) {
       }
     })
   }
-  function addArea(area){
-    user.addArea(area);
+  function addArea(area, email){
+    return UserModel.findOne({
+      where: {
+        email
+      }
+    })
   }
   return {
     findAll,
@@ -67,6 +71,7 @@ module.exports = function setupUser (UserModel, PermissionModel) {
     findByUserName,
     findByEmail,
     validPassword,
-    deleteUser
+    deleteUser,
+    addArea
   }
 }
