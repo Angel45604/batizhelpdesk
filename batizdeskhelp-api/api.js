@@ -174,7 +174,7 @@ api.patch('/problems/:folio', auth(config.auth), async (req, res, next) => {
 })
 
 api.get('/users', auth(config.auth), async (req, res, next) => {
-  debug(`A request has come to /users`)
+  debug(`A request has come to /users GET`)
 
   let users = []
   try {
@@ -188,6 +188,7 @@ api.get('/users', auth(config.auth), async (req, res, next) => {
 
 api.post('/users', auth(config.auth), async(req, res, next) => {
   debug('A request has come to /users')
+  const { users } = req
   const username = req.body.username
   const password = req.body.password 
   const email = req.body.email
@@ -206,6 +207,11 @@ api.post('/users', auth(config.auth), async(req, res, next) => {
   }
 
   res.send(user)
+})
+
+api.get('/permission', async (req, res, next) => {
+  debug(`A request has come to /permission`)
+  debug(Permission)
 })
 
 api.post('/permission', auth(config.auth), async (req, res, next) => {

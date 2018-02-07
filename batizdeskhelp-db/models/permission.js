@@ -15,10 +15,6 @@ module.exports = function setupRoleModel (config) {
     permission: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    username: {
-      type: Sequelize.STRING,
-      allowNull: false
     }
   })
 }

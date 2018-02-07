@@ -28,8 +28,8 @@ module.exports = async function (config) {
   PermissionModel.belongsToMany(UserModel, {through: 'user_permission'})
 
   UserModel.bulkCreate([
-    {username: 'Angel', password: 'angel123', email: 'angel.marcos@live.com', admin: true},
-    {username: 'Mario', password: 'mario123', email: 'mario.chavez@live.com', admin: false}
+    {username: 'Angel', password: 'angel123', email: 'angel.marcos@live.com'},
+    {username: 'Mario', password: 'mario123', email: 'mario.chavez@live.com'}
   ])
 
   await sequelize.authenticate()

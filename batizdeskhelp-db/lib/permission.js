@@ -53,6 +53,10 @@ module.exports = function setupPermission (PermissionModel) {
         })
     }
 
+    function getUsers () {
+        return PermissionModel.getUsers()
+    }
+
     return {
         createOrUpdate,
         findAll,

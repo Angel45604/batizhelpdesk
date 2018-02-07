@@ -23,12 +23,6 @@ module.exports = function setupUserModel (config) {
       type: Sequelize.STRING,
       allowNull: true
     },
-    admin: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-      
-    },
     password: {
       type: Sequelize.STRING,
       allowNull: false
@@ -44,6 +38,7 @@ module.exports = function setupUserModel (config) {
         user.password = bcrypt.hashSync(user.password, salt)
       },
       beforeBulkUpdate: (user) => {
+        console.log(`---------HI------------`+user.attributes.password)
         const salt = bcrypt.genSaltSync()
         user.attributes.password = bcrypt.hashSync(user.attributes.password, salt)
       }
