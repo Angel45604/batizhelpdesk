@@ -33,7 +33,7 @@ module.exports = async function (config) {
   if (config.setup) {
     await sequelize.sync({ force: true })
   }
- 
+  //UserModel.create()
   // sequelize.sync()
 
   const Area = setupArea(AreaModel)

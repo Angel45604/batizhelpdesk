@@ -37,6 +37,13 @@ api.use('*', async (req, res, next) => {
   }
   next()
 })
+api.post('/memes', async (req, res, next) => {
+  console.log(User);
+  let nuser = await User.createOrUpdate({id : 3, username: 'Pablo', email: 'werwer', password: '1234'})
+  let area = await Area.createOrUpdate({id: 1, area: 'progra'})
+  res.send({area, nuser})
+  User.addArea(nuser, area);
+})
 
 api.post('/problems', auth(config.auth), async (req, res, next) => {
   const folio = req.body.folio
@@ -70,7 +77,7 @@ api.get('/problems', auth(config.auth), async (req, res, next) => {
   debug('A request has come to /problems')
   const { user } = req
   debug(`User ${JSON.stringify(user)}`)
-
+  
   if(!user || !user.username) {
     return next(new Error('Not authorized'))
   }

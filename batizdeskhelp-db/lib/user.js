@@ -57,11 +57,13 @@ module.exports = function setupUser (UserModel, PermissionModel) {
       }
     })
   }
-  function addArea(area, email){
-    return UserModel.findOne({
+  function addArea(user, area){
+    UserModel.findOne({
       where: {
-        email
+        id: user.id
       }
+    }).then(us => {
+      us.addArea(area);
     })
   }
   return {
