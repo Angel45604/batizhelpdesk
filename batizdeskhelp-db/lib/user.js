@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function setupUser (UserModel, PermissionModel) {
+module.exports = function setupUser (UserModel, RoleModel) {
 
   async function createOrUpdate (user) {
     const cond = {
@@ -57,13 +57,23 @@ module.exports = function setupUser (UserModel, PermissionModel) {
       }
     })
   }
-  function addArea(user, area){
-    UserModel.findOne({
+  function getAreas(user){
+    return findByEmail(user.email).then(us => {
+      return us.getAreas().then(ars => {
+        return ars
+      })
+    })
+  }
+  function addArea(user, AreaModel, area){
+    console.log('----------------------', area)
+    return UserModel.findOne({
       where: {
         id: user.id
       }
     }).then(us => {
-      us.addArea(area);
+      AreaModel.findById(area.id).then(ar => {
+        us.addArea(ar);
+      })
     })
   }
   return {
@@ -74,6 +84,7 @@ module.exports = function setupUser (UserModel, PermissionModel) {
     findByEmail,
     validPassword,
     deleteUser,
-    addArea
+    addArea,
+    getAreas
   }
 }

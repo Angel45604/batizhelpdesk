@@ -4,7 +4,7 @@ module.exports = function setupArea (AreaModel) {
     async function createOrUpdate (area) {
         const cond = {
           where: {
-            area: area.area
+            name: area.name
           }
         }
     
@@ -14,10 +14,10 @@ module.exports = function setupArea (AreaModel) {
           const updated = await AreaModel.update(area, cond)
           return updated ? AreaModel.findOne(cond) : existingArea
         }
-    
+        
         const result = await AreaModel.create(area)
         return result.toJSON()
-      }
+    }
     
     function findAll () {
         return AreaModel.findAll()
@@ -27,18 +27,18 @@ module.exports = function setupArea (AreaModel) {
         return AreaModel.findById(id)
     }
 
-    function findByArea (area) {
+    function findByName (name) {
         return AreaModel.findOne({
             where: {
-                area
+                name: name
             }
         })
     }
 
-    function deleteArea (area) {
+    function deleteArea (name) {
         return AreaModel.destroy({
             where: {
-                area
+                name
             }
         })
     }
@@ -47,7 +47,7 @@ module.exports = function setupArea (AreaModel) {
         createOrUpdate,
         findAll,
         findById,
-        findByArea,
+        findByName,
         deleteArea
     }
 }

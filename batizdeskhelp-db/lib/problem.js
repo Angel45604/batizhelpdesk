@@ -4,7 +4,7 @@ module.exports = function setupProblem (ProblemModel) {
   const Sequelize = require('sequelize')
   const Op = Sequelize.Op
 
-  async function createOrUpdate (problem) {
+  async function createOrUpdate (problem, user, area) {
     const cond = {
       where: {
         folio: problem.folio
@@ -19,6 +19,8 @@ module.exports = function setupProblem (ProblemModel) {
     }
 
     const result = await ProblemModel.create(problem)
+    let rela = await result.addArea(area)
+    await result.addUser(user);
     return result.toJSON()
   }
 

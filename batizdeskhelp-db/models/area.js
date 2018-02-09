@@ -12,7 +12,7 @@ module.exports = function setupAreaModel (config) {
       primaryKey: true,
       autoIncrement: true
     },
-    area: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     }

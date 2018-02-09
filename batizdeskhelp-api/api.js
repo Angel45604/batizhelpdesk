@@ -17,8 +17,15 @@ api.use(morgan('dev'))
 api.use(bodyParser.urlencoded({extended: true}))
 api.use(bodyParser.json())
 
-let services, Problem, Status, User, Area, ConfigModel, Permission
-
+let services, Problem, Status, User, Area, ConfigModel, Role
+//Funcion temporal para probar
+function genTmp(){
+  return User.createOrUpdate({id : 1, username: 'pollo', email: 'eeee', password: '1234'}).then(us => {
+    Area.createOrUpdate({id : 1, name: 'progra'}).then(ar => {
+      //us.addArea(ar)
+    })
+  })
+}
 api.use('*', async (req, res, next) => {
   if (!services) {
     debug('Connecting to database')
@@ -33,45 +40,136 @@ api.use('*', async (req, res, next) => {
     User = services.User
     Area = services.Area
     ConfigModel = services.Config
-    Permission = services.Permission
+    Role = services.Role
   }
   next()
 })
-api.post('/memes', async (req, res, next) => {
-  console.log(User);
-  let nuser = await User.createOrUpdate({id : 3, username: 'Pablo', email: 'werwer', password: '1234'})
-  let area = await Area.createOrUpdate({id: 1, area: 'progra'})
-  res.send({area, nuser})
-  User.addArea(nuser, area);
-})
 
+//Posts
+
+api.post('/memes', async (req, res, next) => {
+  //Falta sacar el usuario de req
+  let areas = await User.getAreas({id : 3, username: 'Pablo', email: 'werwer', password: '1234'});
+  res.send(areas);
+})
+api.post('/config', auth(config.auth), async (req, res, next) => {
+  debug(`A request ha come to /config`)
+
+  let configs = req.body.config
+  let value = req.body.value
+
+  let newConfig = {
+    config: configs,
+    value
+  }
+
+  try {
+    await ConfigModel.createOrUpdate(newConfig)
+  } catch (e) {
+    return next(e)
+  }
+
+  res.send(newConfig)
+})
 api.post('/problems', auth(config.auth), async (req, res, next) => {
+  console.log(req.body)
   const folio = req.body.folio
   debug(`BODY: ${JSON.stringify(req.body)} FOLIO: ${req.body.folio}`)
   const title = req.body.title
   const content = req.body.content
-  const username = req.body.username
-  const area = req.body.area
   const status = req.body.status
 
   let problem = {
     folio,
     title,
     content,
-    username,
-    area,
     status
   }
   debug(JSON.stringify(problem))
-
+  await genTmp()
   try {
-    await Problem.createOrUpdate(problem)
+    await User.findByEmail(req.body.userEmail).then(us => {
+      Area.findByName(req.body.areaName).then(ar => {
+        Problem.createOrUpdate(problem, us, ar)
+      })
+    })
   } catch (e) {
+    console.log('Hubo un error al crear el problema')
     return next(e)
   }
 
   res.send(problem)
 })
+api.post('/area', auth(config.auth), async(req, res, next) => {
+  debug('A request has come to /area')
+  nArea = {name: req.body.areaName}
+  try {
+     await Area.createOrUpdate(nArea)
+  } catch(e) {
+    return next(e)
+  }
+  res.send(nArea)
+})
+api.post('/users', auth(config.auth), async(req, res, next) => {
+  debug('A request has come to /users')
+  const username = req.body.username
+  const password = req.body.password 
+  const email = req.body.email
+  const admin = req.body.admin
+  let nUser = {
+    username,
+    password,
+    email,
+    admin
+  }
+  debug(`User: ${user}`)
+  try {
+    await User.createOrUpdate(nUser)
+  } catch(e) {
+    return next(e)
+  }
+
+  res.send(nUser)
+})
+api.post('/roles', auth(config.auth), async(req, res, next) => {
+  const nRole = {name: req.body.roleName, isEditor: req.body.roleIsEditor}
+  try {
+    await Role.createOrUpdate(nRole)
+  } catch(e){
+    return next()
+  }
+  res.send(nRole)
+})
+api.post('/users/roles', auth(config.auth), async(req, res, next) => {
+  await User.findByEmail(req.body.userEmail).then(us => {
+    Role.findByName(req.body.roleName).then(ro => {
+       us.addRole(ro);
+    })
+  })
+  res.send({msg : 'Sí se conectó'})
+})
+
+// api.post('/users/area', async(req, res, next) => {
+//   debug('A request has come to /users/area')
+//   const area = req.body.area
+//   const email = req.body.email
+//   console.log(req.params)
+//   console.log(req.body)
+//   console.log(req.body.area)
+//   let newarea = {
+//     area
+//   }
+//   debug(`Area: ${newarea}`)
+//   try {
+//     console.log(await User.addArea(newarea, email))
+//   } catch(e) {
+//     return next(e)
+//   }
+//   res.send(newarea)
+// })
+
+
+//Gets
 
 api.get('/problems', auth(config.auth), async (req, res, next) => {
   debug('A request has come to /problems')
@@ -193,70 +291,28 @@ api.get('/users', auth(config.auth), async (req, res, next) => {
   res.send(users)
 })
 
-api.post('/users', auth(config.auth), async(req, res, next) => {
-  debug('A request has come to /users')
-  const { users } = req
+api.get('/role', async (req, res, next) => {
+  debug(`A request has come to /role`)
+  debug(Role)
+})
+
+api.post('/role', auth(config.auth), async (req, res, next) => {
+  debug(`A request has come to /role`)
   const username = req.body.username
-  const password = req.body.password 
-  const email = req.body.email
-  const admin = req.body.admin
-  let user = {
-    username,
-    password,
-    email,
-    admin
-  }
-  debug(`User: ${user}`)
-  try {
-    await User.createOrUpdate(user)
-  } catch(e) {
-    return next(e)
-  }
-
-  res.send(user)
-})
-
-api.post('/users/area', async(req, res, next) => {
-  debug('A request has come to /users/area')
-  const area = req.body.area
-  const email = req.body.email
-  console.log(req.params)
-  console.log(req.body)
-  console.log(req.body.area)
-  let newarea = {
-    area
-  }
-  debug(`Area: ${newarea}`)
-  try {
-    console.log(await User.addArea(newarea, email))
-  } catch(e) {
-    return next(e)
-  }
-  res.send(newarea)
-})
-
-api.get('/permission', async (req, res, next) => {
-  debug(`A request has come to /permission`)
-  debug(Permission)
-})
-
-api.post('/permission', auth(config.auth), async (req, res, next) => {
-  debug(`A request has come to /permission`)
-  const username = req.body.username
-  const permission = req.body.permission
+  const role = req.body.role
   
-  let newPermission = {
+  let newRole = {
     username,
-    permission
+    role
   }
 
   try {
-    await Permission.createOrUpdate(newPermission)
+    await Role.createOrUpdate(newRole)
   } catch (e) {
     return next(e)
   }
 
-  res.send(newPermission)
+  res.send(newRole)
 })
 
 api.post('/users/:email', auth(config.auth), async (req, res, next) => {
@@ -291,39 +347,6 @@ api.delete('/users/:email', auth(config.auth), async (req, res, next) => {
   res.send(`User with email ${email} successfully deleted`)
 })
 
-
-api.get('/status', auth(config.auth), async (req, res, next) => {
-  debug('A request has come to /status')
-
-  let status = []
-  try {
-    status = await Status.findAll()
-  } catch (e) {
-    return next(e)
-  }
-
-  res.send(status)
-})
-
-api.post('/status', auth(config.auth), async(req, res, next) => {
-  debug('A request has come to /status')
-
-  const day = req.body.day
-  let status = req.body.status
-
-  let newstatus = {
-    day,
-    status
-  }
-  debug(`Status: ${newstatus}`)
-  try {
-    await Status.createOrUpdate(newstatus)
-  } catch(e) {
-    return next(e)
-  }
-  res.send(newstatus)
-})
-
 api.get('/area', auth(config.auth), async(req, res, next) => {
   let areas = []
   try {
@@ -332,25 +355,6 @@ api.get('/area', auth(config.auth), async(req, res, next) => {
     return next(e)
   }
   res.send(areas)
-})
-
-api.post('/area', auth(config.auth), async(req, res, next) => {
-  debug('A request has come to /area')
-
-  const area = req.body.area
-  console.log(req.params)
-  console.log(req.body)
-  console.log(req.body.area)
-  let newarea = {
-    area
-  }
-  debug(`Area: ${newarea}`)
-  try {
-    await Area.createOrUpdate(newarea)
-  } catch(e) {
-    return next(e)
-  }
-  res.send(newarea)
 })
 
 api.delete('/area/:area', auth(config.auth), async (req, res, next) => {
@@ -379,26 +383,6 @@ api.get('/config', auth(config.auth), async (req, res, next) => {
   }
 
   res.send(configs)
-})
-
-api.post('/config', auth(config.auth), async (req, res, next) => {
-  debug(`A request ha come to /config`)
-
-  let configs = req.body.config
-  let value = req.body.value
-
-  let newConfig = {
-    config: configs,
-    value
-  }
-
-  try {
-    await ConfigModel.createOrUpdate(newConfig)
-  } catch (e) {
-    return next(e)
-  }
-
-  res.send(newConfig)
 })
 
 api.delete('/config/:config', auth(config.auth), async (req, res, next) => {
