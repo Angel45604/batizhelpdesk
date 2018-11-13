@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -22,7 +21,7 @@ export class AuthenticationService {
 
     login(username: string, password: string) {      
         return this.http.post('http://localhost:3000/storage/login', { username, password })
-            .map((response: Response) => {
+            .pipe(map((response: Response) => {
                 // login successful
                 console.log(`response ${response.toString()}`)
                 let res = response.json();
@@ -37,7 +36,7 @@ export class AuthenticationService {
                 }else {
                     console.log('Hubo un error');
                 }
-            })
+            }))
     }
 
     logout() {

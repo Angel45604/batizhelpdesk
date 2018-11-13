@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Observable} from 'rxjs/Rx';
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';

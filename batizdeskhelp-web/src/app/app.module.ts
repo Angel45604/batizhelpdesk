@@ -1,9 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -105,7 +102,6 @@ const appRoutes: Routes = [
     CovalentMessageModule,
     CovalentDataTableModule,
     
-    FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatStepperModule,

@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Config } from '../models/config'
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -48,7 +49,7 @@ export class ConfigService implements OnInit {
      getConfigs(){
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
          return this.http.get(this.statusurl, {headers: headers})
-                         .map((res:Response) => res.json()).toPromise()
+                         .pipe(map((res:Response) => res.json())).toPromise()
         
      }  
 
@@ -58,13 +59,13 @@ export class ConfigService implements OnInit {
         let options = new RequestOptions({ headers: headers }); // Create a request option
 
         return this.http.post(this.statusurl, body, {headers: headers}) // ...using post request
-                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .pipe(map((res:Response) => res.json())) // ...and calling .json() on the response to return data
     }
 
     removeConfig (config: string){
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
         return this.http.delete(`${this.statusurl}/${config}`, {headers: headers}) // ...using put request
-                         .map(res => res ) // ...now we return data
+                         .pipe(map(res => res )) // ...now we return data
     }
 
     ngOnInit() {

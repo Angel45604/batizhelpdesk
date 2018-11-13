@@ -1,42 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { User } from '../models/user'
+import { Area } from '../models/area'
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
-export class UserService {
+export class AreaService {
      constructor (private http: Http) {}
-     private statusurl='http://localhost:3000/api/users';   
+     private statusurl='http://localhost:3000/api/area';   
 
-     getUsers(){
+     getAreas(){
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
          return this.http.get(this.statusurl, {headers: headers})
-                         .map((res:Response) => res.json())
+                         .pipe(map((res:Response) => res.json()))
         
      }  
 
-     addUser (body: Object){
+     addArea (body: Object){
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') }); // ... Set content type to JSON
         let options = new RequestOptions({ headers: headers }); // Create a request option
 
         return this.http.post(this.statusurl, body, {headers: headers}) // ...using post request
-                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .pipe(map((res:Response) => res.json())) // ...and calling .json() on the response to return data
     }
 
-    editUser (body){
-        let bodyString = JSON.stringify(body);
-        console.log(bodyString);
+    removeArea (area: string){
         let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
-        let options = new RequestOptions({ headers: headers })
-
-        return this.http.post(this.statusurl, body, {headers: headers})
-                        .map(res => res)
-    }
-
-    removeUser (user: string){
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer '+sessionStorage.getItem('id_token') });
-        return this.http.delete(`${this.statusurl}/${user}`, {headers: headers}) // ...using put request
-                         .map(res => res ) // ...now we return data
+        return this.http.delete(`${this.statusurl}/${area}`, {headers: headers}) // ...using put request
+                         .pipe(map(res => res )) // ...now we return data
     }
 }

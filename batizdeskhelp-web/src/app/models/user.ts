@@ -3,5 +3,5 @@ export class User {
     password: string;
     email: string;
     admin: boolean;
-    roles: any[];
+    permissions: any[];
 }
